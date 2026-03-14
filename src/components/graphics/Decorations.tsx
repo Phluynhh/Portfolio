@@ -1,4 +1,5 @@
 import React from "react";
+import { Database, Code, Star } from "lucide-react";
 
 export default function Decorations() {
   return (
@@ -30,10 +31,61 @@ export default function Decorations() {
     opacity: 0.5;
   }
 }
+
+@keyframes iconBounce {
+  0% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  42% {
+    transform: translateY(-18px);
+    animation-timing-function: cubic-bezier(0.55, 0, 0.85, 0.2);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
 `}
         </style>
         {/* Rotating square */}
         <div className="absolute inset-0 border-[1.25] border-primary/50 rounded-2xl animate-spin animation-duration-[15s]"></div>
+        {/* FE icon */}
+        <div
+          className="absolute -left-10 bottom-2 text-primary/45"
+          style={{
+            animation: "iconBounce 1.2s linear infinite",
+            transformOrigin: "center bottom",
+            willChange: "transform",
+          }}
+        >
+          <Database size={44} strokeWidth={1.8} />
+        </div>
+
+        {/* BE icon */}
+        <div
+          className="absolute left-1/2 -translate-x-1/2 -top-18 text-primary/45"
+          style={{
+            animation: "iconBounce 1.2s linear infinite",
+            animationDelay: "0.12s",
+            transformOrigin: "center bottom",
+            willChange: "transform",
+          }}
+        >
+          <Code size={44} strokeWidth={1.8} />
+        </div>
+
+        {/* AI icon */}
+        <div
+          className="absolute -right-12 bottom-1 text-primary/45"
+          style={{
+            animation: "iconBounce 1.2s linear infinite",
+            animationDelay: "0.24s",
+            transformOrigin: "center bottom",
+            willChange: "transform",
+          }}
+        >
+          <Star size={44} strokeWidth={1.8} />
+        </div>
       </div>
     </div>
   );
