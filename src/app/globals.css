@@ -163,3 +163,78 @@
     @apply bg-background text-foreground antialiased;
   }
 }
+
+@keyframes orb-breathe {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(0.88);
+    opacity: 0.45;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.12);
+    opacity: 0.72;
+  }
+}
+
+@keyframes float-jump {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes slow-tilt {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) rotate(12deg);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) rotate(17deg);
+  }
+}
+
+@keyframes square-reveal {
+  0% {
+    opacity: 0.12;
+    transform: scale(0.92);
+    filter: blur(6px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@layer utilities {
+  .orb-breathe {
+    animation: orb-breathe 3.8s ease-in-out infinite;
+  }
+
+  .float-jump {
+    animation: float-jump 2.2s ease-in-out infinite;
+  }
+
+  .float-jump-delay-1 {
+    animation: float-jump 2.4s ease-in-out 0.25s infinite;
+  }
+
+  .float-jump-delay-2 {
+    animation: float-jump 2.1s ease-in-out 0.45s infinite;
+  }
+
+  .slow-tilt {
+    animation: slow-tilt 8s ease-in-out infinite;
+  }
+
+  .square-reveal {
+    animation: square-reveal 1.3s ease-out both;
+  }
+}
