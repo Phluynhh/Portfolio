@@ -14,21 +14,29 @@ export default function Decorations() {
           <div className="absolute w-full h-full rounded-[32px] bg-primary/45 blur-[35px]"></div>
         </div>
         <div className="absolute inset-0 z-10 flex items-center justify-center">
-          <div className="relative h-60 w-60">
-            <Image
-              src="/avatar.png"
-              alt="Avatar"
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 160px, 180px"
-              priority
-            />
+          <div className="flex flex-col items-center">
+            <div className="relative h-60 w-60">
+              <Image
+                src="/body.png"
+                alt="Avatar"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 160px, 180px"
+                priority
+              />
+            </div>
+            <div className="items-center text-center rounded-xl bg-white px-5 py-2 shadow-[0_8px_20px_rgba(0,0,0,0.12)]">
+              <p className="whitespace-nowrap text-lg font-extrabold tracking-wide text-neutral-900">
+                TRAN DINH PHUONG LINH
+              </p>
+              <p>React • Node.js • AI/LLM</p>
+            </div>
           </div>
         </div>
         {/* Rotating square */}
         <div className="absolute inset-0 border-[1.25] border-primary/50 rounded-2xl animate-spin animation-duration-[15s]"></div>
         {/* FE icon */}
-        <div className="absolute -left-10 bottom-2 text-primary/45 icon-bounce">
+        <div className="absolute -left-20 bottom-10 text-primary/45 icon-bounce">
           <Database size={44} strokeWidth={1.8} />
         </div>
 
@@ -38,36 +46,36 @@ export default function Decorations() {
         </div>
 
         {/* AI icon */}
-        <div className="absolute -right-12 bottom-1 text-primary/45 icon-bounce icon-bounce-delay-2">
+        <div className="absolute -right-20 bottom-10 text-primary/45 icon-bounce icon-bounce-delay-2">
           <Star size={44} strokeWidth={1.8} />
         </div>
 
         {/* FE card */}
-        <div className="absolute -left-30 bottom-20 w-28 rounded-2xl bg-white/90 shadow-[0_8px_20px_rgba(0,0,0,0.12)] px-5 py-4">
+        {/* <div className="absolute -left-30 bottom-20 w-28 rounded-2xl bg-white/90 shadow-[0_8px_20px_rgba(0,0,0,0.12)] px-5 py-4">
           <div className="flex items-center gap-3">
             <div className="w-3 h-3 rounded-full bg-primary"></div>
             <p className="text-sm font-semibold text-neutral-800">React</p>
           </div>
           <p className="mt-2 text-sm text-neutral-500">Frontend</p>
-        </div>
+        </div> */}
 
         {/* BE card */}
-        <div className="absolute -right-24 -top-8 w-32 rounded-2xl bg-white/90 shadow-[0_8px_20px_rgba(0,0,0,0.12)] px-5 py-4">
+        {/* <div className="absolute -right-24 -top-2 w-32 rounded-2xl bg-white/90 shadow-[0_8px_20px_rgba(0,0,0,0.12)] px-5 py-4">
           <div className="flex items-center gap-3">
             <div className="w-3 h-3 rounded-full bg-primary"></div>
             <p className="text-sm font-semibold text-neutral-800">Node.js</p>
           </div>
           <p className="mt-2 text-sm text-neutral-500">Backend</p>
-        </div>
+        </div> */}
 
         {/* AI card */}
-        <div className="absolute -right-4 -bottom-16 w-32 rounded-2xl bg-white/90 shadow-[0_8px_20px_rgba(0,0,0,0.12)] px-5 py-4">
+        {/* <div className="absolute -left-20 -top-10 w-32 rounded-2xl bg-white/90 shadow-[0_8px_20px_rgba(0,0,0,0.12)] px-5 py-4">
           <div className="flex items-center gap-3">
             <div className="w-3 h-3 rounded-full bg-primary"></div>
             <p className="text-sm font-semibold text-neutral-800">AI/LLM</p>
           </div>
           <p className="mt-2 text-sm text-neutral-500">Innovation</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

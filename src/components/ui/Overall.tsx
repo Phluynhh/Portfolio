@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Decorations from "../graphics/Decorations";
-
+import { Button } from "@/components/ui/button";
 export default function Overall() {
   const headline = "Fullstack Developer Building Modern Web & AI Products";
   const skills = ["Fullstack", "Frontend", "Backend", "AI/ML"];
@@ -60,6 +60,13 @@ export default function Overall() {
                 {skill}
               </span>
             ))}
+          </div>
+
+          <div className="mt-4">
+            <Button>View Projects</Button>
+            <Button variant={"secondary"} className="ml-2">
+              Contact Me
+            </Button>
           </div>
         </div>
 
