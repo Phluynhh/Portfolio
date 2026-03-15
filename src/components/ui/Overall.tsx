@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Decorations from "../graphics/Decorations";
 import { Button } from "@/components/ui/button";
+import { MoveRight, Github, Linkedin, Mail } from "lucide-react";
 export default function Overall() {
   const headline = "Fullstack Developer Building Modern Web & AI Products";
   const skills = ["Fullstack", "Frontend", "Backend", "AI/ML"];
@@ -45,7 +46,7 @@ export default function Overall() {
             <span className="ml-1 inline-block h-[1em] w-0.5 animate-pulse bg-foreground align-[-0.15em]" />
           </h1>
 
-          <h2 className="mt-5 text-lg text-foreground/75 lg:text-xl">
+          <h2 className="mt-5 text-base text-foreground/75 lg:text-xl">
             I design and develop modern digital products with strong frontend
             execution, reliable backend architecture, and AI-powered
             functionality.
@@ -62,11 +63,29 @@ export default function Overall() {
             ))}
           </div>
 
-          <div className="mt-4">
-            <Button>View Projects</Button>
-            <Button variant={"secondary"} className="ml-2">
+          <div className="mt-8">
+            <Button className="text-base">
+              View Projects
+              <MoveRight />
+            </Button>
+            <Button variant={"secondary"} className="ml-2 text-base">
               Contact Me
             </Button>
+          </div>
+
+          <div className="mt-8 flex items-center gap-8">
+            <p>Follow me:</p>
+            <div className="flex items-center gap-8">
+              <a href="https://github.com/Phluynhh">
+                <Github />
+              </a>
+              <a href="https://www.linkedin.com/in/linh-trần-đình-phương-116010355/">
+                <Linkedin />
+              </a>
+              <a href="mailto:tranlinh250415@gmail.com">
+                <Mail />
+              </a>
+            </div>
           </div>
         </div>
 

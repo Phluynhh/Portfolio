@@ -47,7 +47,7 @@ export default function Header() {
   }
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 h-20 border-b border-border bg-background/85 backdrop-blur-md">
+    <header className="fixed top-0 inset-x-0 z-50 h-20 border-b border-border bg-background/50 backdrop-blur-md">
       <div className="mx-auto flex h-full w-full max-w-6xl items-center justify-between">
         {/* Logo */}
         <Link
