@@ -8,7 +8,7 @@ export default function About() {
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 py-8">
         <h1 className="text-5xl font-bold">About me</h1>
         <Separator className="data-horizontal:h-1 w-1/12! rounded-full bg-primary" />
-        <div className="mx-auto flex w-full flex-col items-center justify-between gap-12 py-8 lg:flex-row">
+        <div className="mx-auto flex w-full flex-col justify-between gap-12 py-8 lg:flex-row">
           <div className="w-full lg:w-2/3">
             <p>
               I'm a versatile software developer with a passion for building
