@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import {
   BrainCircuit,
@@ -103,6 +104,32 @@ export default function Skills() {
             icon={<Wrench color="#246bf6" />}
             skills={toolSkills}
           />
+        </div>
+
+        <div className="flex w-full flex-col gap-4 lg:flex-row lg:items-center">
+          <div className="w-full rounded-2xl border border-bs-accent-foreground/20 bg-sidebar p-8 lg:w-1/2">
+            <p>
+              I'm always learning and exploring new technologies. If there's a
+              specific tech stack you're looking for, there's a good chance I
+              can pick it up quickly!
+            </p>
+            <p className="text-sm">
+              My approach is to master the fundamentals deeply while staying
+              current with industry trends.
+            </p>
+          </div>
+
+          <div className="flex w-full items-center lg:w-1/2 lg:justify-center">
+            <Image
+              src="/camera.png"
+              alt="Camera photo"
+              width={320}
+              height={320}
+              className="h-70 w-auto object-contain md:h-72 lg:h-90"
+              unoptimized
+              priority
+            />
+          </div>
         </div>
       </div>
     </section>
