@@ -29,7 +29,7 @@ export default function Decorations() {
               <p className="whitespace-nowrap text-lg font-extrabold tracking-wide text-neutral-900">
                 TRAN DINH PHUONG LINH
               </p>
-              <p>React • Node.js • AI/LLM</p>
+              <p>Nextjs • Python • AI/LLM</p>
             </div>
           </div>
         </div>
