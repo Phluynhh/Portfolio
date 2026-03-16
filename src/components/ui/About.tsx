@@ -1,10 +1,88 @@
 import React from "react";
+import { Separator } from "@/components/ui/separator";
+import { Target, Zap, Heart } from "lucide-react";
 
 export default function About() {
   return (
     <section className="relative overflow-hidden">
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-12 py-8 lg:flex-row">
-        <p>hihi</p>
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 py-8">
+        <h1 className="text-5xl font-bold">About me</h1>
+        <Separator className="data-horizontal:h-1 w-1/12! rounded-full bg-primary" />
+        <div className="mx-auto flex w-full flex-col items-center justify-between gap-12 py-8 lg:flex-row">
+          <div className="w-full lg:w-2/3">
+            <p>
+              I'm a versatile software developer with a passion for building
+              beautiful, scalable digital products. With expertise spanning
+              frontend, backend, fullstack, and AI engineering, I bring a unique
+              perspective to every project.
+            </p>
+            <p className="mt-4">
+              My journey in tech started with a fascination for how things work.
+              I've spent years mastering modern web technologies, designing
+              robust backend systems, and exploring the intersection of AI and
+              product development.
+            </p>
+            <p className="mt-4">
+              What drives me is the opportunity to solve real problems with
+              elegant code. I believe in writing clean, maintainable solutions
+              that don't just work—they delight users and impress technical
+              leaders.
+            </p>
+            <p className="mt-4">
+              I'm equally comfortable working independently or in teams, and I
+              thrive in fast-paced environments where I can wear multiple hats
+              and learn continuously.
+            </p>
+          </div>
+          <div className="w-full lg:w-1/3">
+            <div className="border border-primary/20 rounded-2xl p-8 bg-sidebar">
+              <p className="text-primary text-xl font-bold">Philosophy</p>
+              <p className="mt-4 italic text-sm">
+                "Ship with quality. Build for scale. Think like a product owner.
+                Code like you'll maintain it forever."
+              </p>
+            </div>
+
+            <div className="mt-4 flex items-center gap-4 rounded-2xl bg-sidebar p-4 transition-transform duration-200 ease-out hover:scale-[1.02]">
+              <div className="rounded-lg bg-primary/20 p-2">
+                <Target color="#246bf6" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold">Problem Solver</p>
+                <p className="text-xs mt-1">
+                  I approach every challenge with a clear head and creative
+                  mindset.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-4 flex items-center gap-4 rounded-2xl bg-sidebar p-4 transition-transform duration-200 ease-out hover:scale-[1.02]">
+              <div className="rounded-lg bg-primary/20 p-2">
+                <Zap color="#246bf6" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold">Quick Learner</p>
+                <p className="text-xs mt-1">
+                  New technologies and domains are exciting opportunities, not
+                  obstacles.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-4 flex items-center gap-4 rounded-2xl bg-sidebar p-4 transition-transform duration-200 ease-out hover:scale-[1.02]">
+              <div className="rounded-lg bg-primary/20 p-2">
+                <Heart color="#246bf6" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold">Passionate</p>
+                <p className="text-xs mt-1">
+                  I genuinely care about building products that matter and make
+                  an impact.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
