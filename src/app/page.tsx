@@ -6,10 +6,10 @@ export default function Home() {
   return (
     <div className="w-full flex-col">
       <Header />
-      <div className="mt-20">
+      <div id="overall" className="mt-20 scroll-mt-24">
         <Overall />
       </div>
-      <div className="mt-4">
+      <div id="about" className="mt-4 scroll-mt-24">
         <About />
       </div>
     </div>

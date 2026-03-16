@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
+import { useState, useEffect, type MouseEvent } from "react";
 import { Globe, Moon, Sun } from "lucide-react";
 import {
   Select,
@@ -46,16 +45,28 @@ export default function Header() {
     localStorage.setItem("theme", next ? "dark" : "light");
   }
 
+  function scrollToSection(event: MouseEvent<HTMLAnchorElement>, href: string) {
+    const id = href.replace("#", "");
+    const target = document.getElementById(id);
+
+    if (!target) return;
+
+    event.preventDefault();
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    history.replaceState(null, "", `#${id}`);
+  }
+
   return (
     <header className="fixed top-0 inset-x-0 z-50 h-20 border-b border-border bg-background/50 backdrop-blur-md">
       <div className="mx-auto flex h-full w-full max-w-6xl items-center justify-between">
         {/* Logo */}
-        <Link
-          href="/"
+        <a
+          href="#overall"
+          onClick={(event) => scrollToSection(event, "#overall")}
           className="text-2xl font-bold text-primary tracking-tight select-none"
         >
           Portfolio
-        </Link>
+        </a>
 
         {/* Nav */}
         <nav>
@@ -64,6 +75,7 @@ export default function Header() {
               <li key={link.href}>
                 <a
                   href={link.href}
+                  onClick={(event) => scrollToSection(event, link.href)}
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
                 >
                   {link.label}
