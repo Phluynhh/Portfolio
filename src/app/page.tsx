@@ -1,4 +1,5 @@
 import About from "@/components/ui/About";
+import Experience from "@/components/ui/Experience";
 import Header from "@/components/ui/Header";
 import Overall from "@/components/ui/Overall";
 import Projects from "@/components/ui/Projects";
@@ -19,6 +20,9 @@ export default function Home() {
       </div>
       <div id="projects" className="mt-4 scroll-mt-24">
         <Projects />
+      </div>
+      <div id="experience" className="mt-4 scroll-mt-24">
+        <Experience />
       </div>
     </div>
   );
