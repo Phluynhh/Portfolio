@@ -4,9 +4,20 @@ import { useEffect, useState } from "react";
 import Decorations from "../graphics/Decorations";
 import { Button } from "@/components/ui/button";
 import { MoveRight, Github, Linkedin, Mail } from "lucide-react";
-export default function Overall() {
-  const headline = "Fullstack Developer Building Modern Web & AI Products";
-  const skills = ["Fullstack", "Frontend", "Backend", "AI/ML"];
+import type { Language } from "../../lib/i18n";
+
+interface OverallProps {
+  lang: Language;
+}
+
+export default function Overall({ lang }: OverallProps) {
+  const isVi = lang === "vi";
+  const headline = isVi
+    ? "Lập trình viên Fullstack xây dựng sản phẩm Web và AI hiện đại"
+    : "Fullstack Developer Building Modern Web & AI Products";
+  const skills = isVi
+    ? ["Fullstack", "Frontend", "Backend", "AI/ML"]
+    : ["Fullstack", "Frontend", "Backend", "AI/ML"];
   const [typedHeadline, setTypedHeadline] = useState("");
 
   useEffect(() => {
@@ -22,7 +33,7 @@ export default function Overall() {
     }, 35);
 
     return () => clearInterval(typingTimer);
-  }, []);
+  }, [headline]);
 
   return (
     <section className="relative overflow-hidden">
@@ -34,7 +45,7 @@ export default function Overall() {
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
             </span>
             <span className="text-sm font-medium leading-none">
-              Open to Work
+              {isVi ? "Sẵn sàng nhận việc" : "Open to Work"}
             </span>
           </div>
 
@@ -47,9 +58,9 @@ export default function Overall() {
           </h1>
 
           <h2 className="mt-5 text-base text-foreground/75 lg:text-xl">
-            I design and develop modern digital products with strong frontend
-            execution, reliable backend architecture, and AI-powered
-            functionality.
+            {isVi
+              ? "Mình thiết kế và phát triển sản phẩm số hiện đại với frontend chỉn chu, backend vững chắc và các tính năng ứng dụng AI."
+              : "I design and develop modern digital products with strong frontend execution, reliable backend architecture, and AI-powered functionality."}
           </h2>
 
           <div className="mt-6 flex flex-wrap gap-3">
@@ -65,16 +76,16 @@ export default function Overall() {
 
           <div className="mt-8">
             <Button className="text-base">
-              View Projects
+              {isVi ? "Xem dự án" : "View Projects"}
               <MoveRight />
             </Button>
             <Button variant={"secondary"} className="ml-2 text-base">
-              Contact Me
+              {isVi ? "Liên hệ" : "Contact Me"}
             </Button>
           </div>
 
           <div className="mt-8 flex items-center gap-8">
-            <p>Follow me:</p>
+            <p>{isVi ? "Theo dõi mình:" : "Follow me:"}</p>
             <div className="flex items-center gap-8">
               <a href="https://github.com/Phluynhh">
                 <Github />

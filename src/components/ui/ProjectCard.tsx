@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Github, Monitor, Sparkles } from "lucide-react";
+import type { Language } from "../../lib/i18n";
 
 export type ProjectCategory = "FE" | "BE" | "AI";
 
@@ -17,9 +18,11 @@ export interface ProjectItem {
 
 interface ProjectCardProps {
   project: ProjectItem;
+  lang: Language;
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({ project, lang }: ProjectCardProps) {
+  const isVi = lang === "vi";
   const categoryLabel = project.categories.join("/");
 
   return (
@@ -58,7 +61,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </div>
 
         <p className="text-sm text-foreground/90">
-          Role: <span className="font-semibold">{project.role}</span>
+          {isVi ? "Vai trò:" : "Role:"}{" "}
+          <span className="font-semibold">{project.role}</span>
         </p>
 
         <div className="flex flex-wrap gap-2">
@@ -86,16 +90,20 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                   href={project.liveUrl}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label={`View live demo of ${project.title}`}
+                  aria-label={
+                    isVi
+                      ? `Xem bản chạy thử của ${project.title}`
+                      : `View live demo of ${project.title}`
+                  }
                 >
                   <ExternalLink size={18} />
-                  View Live
+                  {isVi ? "Xem demo" : "View Live"}
                 </a>
               </Button>
             ) : (
               <Button disabled className="h-12 w-full text-base font-semibold">
                 <ExternalLink size={18} />
-                Updating...
+                {isVi ? "Đang cập nhật..." : "Updating..."}
               </Button>
             )}
 
@@ -108,10 +116,14 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                 href={project.githubUrl}
                 target="_blank"
                 rel="noreferrer"
-                aria-label={`View source code of ${project.title}`}
+                aria-label={
+                  isVi
+                    ? `Xem mã nguồn của ${project.title}`
+                    : `View source code of ${project.title}`
+                }
               >
                 <Github size={18} />
-                View Code
+                {isVi ? "Xem mã nguồn" : "View Code"}
               </a>
             </Button>
           </div>

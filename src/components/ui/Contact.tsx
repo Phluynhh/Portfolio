@@ -1,14 +1,25 @@
 import React from "react";
 import { Separator } from "@/components/ui/separator";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
-export default function Contact() {
+import type { Language } from "../../lib/i18n";
+
+interface ContactProps {
+  lang: Language;
+}
+
+export default function Contact({ lang }: ContactProps) {
+  const isVi = lang === "vi";
+
   return (
     <section className="relative overflow-hidden">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 py-8">
-        <h1 className="text-5xl font-bold text-center">Get In Touch</h1>
+        <h1 className="text-5xl font-bold text-center">
+          {isVi ? "Liên hệ" : "Get In Touch"}
+        </h1>
         <p className="text-center">
-          I'm always interested in hearing about new opportunities and
-          interesting projects.
+          {isVi
+            ? "Mình luôn sẵn sàng trao đổi về cơ hội mới và những dự án thú vị."
+            : "I'm always interested in hearing about new opportunities and interesting projects."}
         </p>
         <Separator className="data-horizontal:h-1 w-1/12! mx-auto rounded-full bg-primary" />
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[360px_minmax(0,1fr)] lg:gap-14">
@@ -16,20 +27,20 @@ export default function Contact() {
           <div className="space-y-6">
             {[
               {
-                title: "Email",
+                title: isVi ? "Email" : "Email",
                 value: "tranlinh250415@gmail.com",
                 href: "mailto:tranlinh250415@gmail.com",
                 icon: <Mail />,
               },
               {
-                title: "Phone",
+                title: isVi ? "Điện thoại" : "Phone",
                 value: "0941 410 532",
                 href: "tel:0941410532",
                 icon: <Phone />,
               },
               {
-                title: "Location",
-                value: "Vietnam",
+                title: isVi ? "Địa điểm" : "Location",
+                value: isVi ? "Việt Nam" : "Vietnam",
                 href: "#",
                 icon: <MapPin />,
               },
@@ -59,8 +70,9 @@ export default function Contact() {
 
             <div className="rounded-3xl border border-primary/10 bg-primary/5 px-8 py-6">
               <p className="text-sm leading-6 text-foreground/75">
-                I usually respond within 24 hours. Looking forward to connecting
-                with you!
+                {isVi
+                  ? "Mình thường phản hồi trong vòng 24 giờ. Rất mong được kết nối với bạn!"
+                  : "I usually respond within 24 hours. Looking forward to connecting with you!"}
               </p>
             </div>
           </div>
@@ -69,18 +81,18 @@ export default function Contact() {
           <div className="space-y-7">
             <div className="space-y-3">
               <label className="text-base font-semibold text-foreground">
-                Full Name
+                {isVi ? "Họ và tên" : "Full Name"}
               </label>
               <input
                 type="text"
-                placeholder="Your name"
+                placeholder={isVi ? "Tên của bạn" : "Your name"}
                 className="h-12 w-full rounded-lg border border-border bg-background px-5 text-base outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-primary mt-2"
               />
             </div>
 
             <div className="space-y-3">
               <label className="text-base font-semibold text-foreground">
-                Email Address
+                {isVi ? "Địa chỉ email" : "Email Address"}
               </label>
               <input
                 type="email"
@@ -91,21 +103,29 @@ export default function Contact() {
 
             <div className="space-y-3">
               <label className="text-base font-semibold text-foreground">
-                Company
+                {isVi ? "Công ty" : "Company"}
               </label>
               <input
                 type="text"
-                placeholder="Your company (optional)"
+                placeholder={
+                  isVi
+                    ? "Công ty của bạn (không bắt buộc)"
+                    : "Your company (optional)"
+                }
                 className="h-12 w-full rounded-lg border border-border bg-background px-5 text-base outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-primary mt-2"
               />
             </div>
 
             <div className="space-y-3">
               <label className="text-base font-semibold text-foreground">
-                Message
+                {isVi ? "Nội dung" : "Message"}
               </label>
               <textarea
-                placeholder="Tell me about your project..."
+                placeholder={
+                  isVi
+                    ? "Hãy chia sẻ với mình về dự án của bạn..."
+                    : "Tell me about your project..."
+                }
                 rows={7}
                 className="resize-none min-h-45 w-full rounded-2xl border border-border bg-background px-5 py-4 text-base outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-primary mt-2"
               />
@@ -115,7 +135,7 @@ export default function Contact() {
               type="button"
               className="flex h-12 w-full items-center justify-center gap-3 rounded-lg bg-primary px-6 text-base font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:opacity-95"
             >
-              Send Message
+              {isVi ? "Gửi tin nhắn" : "Send Message"}
               <Send />
             </button>
           </div>

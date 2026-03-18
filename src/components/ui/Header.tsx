@@ -1,22 +1,33 @@
 "use client";
 
 import {
-  useState,
   useEffect,
+  useState,
   useRef,
   type MouseEvent,
   type KeyboardEvent,
 } from "react";
 import { Globe, Moon, Sun, ChevronDown, Check } from "lucide-react";
+import type { Language } from "../../lib/i18n";
 
-const NAV_LINKS = [
-  { label: "About", href: "#about" },
-  { label: "Skills", href: "#skills" },
-  { label: "Projects", href: "#projects" },
-  { label: "Experience", href: "#experience" },
-  { label: "Services", href: "#services" },
-  { label: "Contact", href: "#contact" },
-];
+const NAV_LINKS: Record<Language, Array<{ label: string; href: string }>> = {
+  en: [
+    { label: "About", href: "#about" },
+    { label: "Skills", href: "#skills" },
+    { label: "Projects", href: "#projects" },
+    { label: "Experience", href: "#experience" },
+    { label: "Services", href: "#services" },
+    { label: "Contact", href: "#contact" },
+  ],
+  vi: [
+    { label: "Giới thiệu", href: "#about" },
+    { label: "Kỹ năng", href: "#skills" },
+    { label: "Dự án", href: "#projects" },
+    { label: "Kinh nghiệm", href: "#experience" },
+    { label: "Dịch vụ", href: "#services" },
+    { label: "Liên hệ", href: "#contact" },
+  ],
+};
 
 const LANGUAGES = [
   { value: "en", label: "English" },
@@ -30,8 +41,12 @@ function getInitialTheme(): boolean {
   return window.matchMedia("(prefers-color-scheme: dark)").matches;
 }
 
-export default function Header() {
-  const [lang, setLang] = useState("en");
+interface HeaderProps {
+  lang: Language;
+  onLanguageChange: (value: Language) => void;
+}
+
+export default function Header({ lang, onLanguageChange }: HeaderProps) {
   const [isDark, setIsDark] = useState(getInitialTheme);
   const [isLangOpen, setIsLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement | null>(null);
@@ -80,8 +95,8 @@ export default function Header() {
     history.replaceState(null, "", `#${id}`);
   }
 
-  function handleLanguageSelect(value: string) {
-    setLang(value);
+  function handleLanguageSelect(value: Language) {
+    onLanguageChange(value);
     setIsLangOpen(false);
   }
 
@@ -99,6 +114,7 @@ export default function Header() {
 
   const selectedLanguage =
     LANGUAGES.find((language) => language.value === lang) ?? LANGUAGES[0];
+  const navLinks = NAV_LINKS[lang];
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 h-20 border-b border-border bg-background/50 backdrop-blur-md">
@@ -113,7 +129,7 @@ export default function Header() {
 
         <nav>
           <ul className="flex items-center gap-7">
-            {NAV_LINKS.map((link) => (
+            {navLinks.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
@@ -133,7 +149,7 @@ export default function Header() {
               type="button"
               aria-haspopup="listbox"
               aria-expanded={isLangOpen}
-              aria-label="Select language"
+              aria-label={lang === "vi" ? "Chọn ngôn ngữ" : "Select language"}
               onClick={() => setIsLangOpen((prev) => !prev)}
               onKeyDown={handleTriggerKeyDown}
               className="flex h-9 w-42.5 items-center justify-between rounded-xl px-3 text-sm text-muted-foreground transition-colors hover:bg-muted"
@@ -166,7 +182,9 @@ export default function Header() {
                       type="button"
                       role="option"
                       aria-selected={isSelected}
-                      onClick={() => handleLanguageSelect(language.value)}
+                      onClick={() =>
+                        handleLanguageSelect(language.value as Language)
+                      }
                       className="flex h-11 w-full items-center justify-between px-4 text-left text-sm transition-colors hover:bg-muted"
                     >
                       <span className="w-23 shrink-0 text-left">
@@ -185,7 +203,7 @@ export default function Header() {
 
           <button
             onClick={toggleTheme}
-            aria-label="Toggle theme"
+            aria-label={lang === "vi" ? "Đổi giao diện" : "Toggle theme"}
             className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
             {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}

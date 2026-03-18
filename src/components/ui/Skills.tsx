@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 import SkillCard from "@/components/ui/SkillCard";
+import type { Language } from "../../lib/i18n";
 
 const frontendSkills = [
   "HTML5",
@@ -73,30 +74,35 @@ const toolSkills = [
   "Agile",
 ];
 
-const profileHighlights = [
-  {
-    title: "Studying at",
-    value: "UIT - VNU HCM",
-    icon: GraduationCap,
-    className:
-      "left-0 top-14 sm:left-2 md:-left-2 md:top-18 lg:left-0 xl:-left-2",
-  },
-  {
-    title: "Main focus",
-    value: "FE & BE",
-    icon: Rocket,
-    className:
-      "right-0 top-36 sm:right-2 md:-right-4 md:top-40 lg:right-0 xl:-right-6",
-  },
-  {
-    title: "Exploring",
-    value: "AI, RAG & LLM Apps",
-    icon: Sparkles,
-    className: "bottom-6 left-1/2 -translate-x-1/2 md:bottom-0 lg:bottom-2",
-  },
-];
+interface SkillsProps {
+  lang: Language;
+}
 
-export default function Skills() {
+export default function Skills({ lang }: SkillsProps) {
+  const isVi = lang === "vi";
+  const profileHighlights = [
+    {
+      title: isVi ? "Đang học tại" : "Studying at",
+      value: "UIT - VNU HCM",
+      icon: GraduationCap,
+      className:
+        "left-0 top-14 sm:left-2 md:-left-2 md:top-18 lg:left-0 xl:-left-2",
+    },
+    {
+      title: isVi ? "Trọng tâm" : "Main focus",
+      value: "FE & BE",
+      icon: Rocket,
+      className:
+        "right-0 top-36 sm:right-2 md:-right-4 md:top-40 lg:right-0 xl:-right-6",
+    },
+    {
+      title: isVi ? "Đang khám phá" : "Exploring",
+      value: "AI, RAG & LLM Apps",
+      icon: Sparkles,
+      className: "bottom-6 left-1/2 -translate-x-1/2 md:bottom-0 lg:bottom-2",
+    },
+  ];
+
   const imageSectionRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(imageSectionRef, {
     once: true,
@@ -106,7 +112,9 @@ export default function Skills() {
   return (
     <section className="relative overflow-hidden">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 py-8">
-        <h1 className="text-5xl font-bold">Skills & Expertise</h1>
+        <h1 className="text-5xl font-bold">
+          {isVi ? "Kỹ năng & Chuyên môn" : "Skills & Expertise"}
+        </h1>
         <Separator className="data-horizontal:h-1 w-1/12! rounded-full bg-primary" />
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -121,7 +129,7 @@ export default function Skills() {
             skills={backendSkills}
           />
           <SkillCard
-            title="Databases"
+            title={isVi ? "Cơ sở dữ liệu" : "Databases"}
             icon={<Database className="text-primary" />}
             skills={databaseSkills}
           />
@@ -136,7 +144,7 @@ export default function Skills() {
             skills={aiLlmSkills}
           />
           <SkillCard
-            title="Tools"
+            title={isVi ? "Công cụ" : "Tools"}
             icon={<Wrench className="text-primary" />}
             skills={toolSkills}
           />
@@ -145,13 +153,14 @@ export default function Skills() {
         <div className="flex w-full flex-col gap-6 lg:flex-row lg:items-center">
           <div className="w-full rounded-3xl border border-bs-accent-foreground/20 bg-sidebar p-8 shadow-sm lg:w-1/2">
             <p className="text-base leading-7 text-foreground/90">
-              I&apos;m always learning and exploring new technologies. If
-              there&apos;s a specific tech stack you&apos;re looking for,
-              there&apos;s a good chance I can pick it up quickly.
+              {isVi
+                ? "Mình luôn học hỏi và khám phá công nghệ mới. Nếu bạn đang tìm một tech stack cụ thể, khả năng cao là mình có thể nắm bắt rất nhanh."
+                : "I&apos;m always learning and exploring new technologies. If there&apos;s a specific tech stack you&apos;re looking for, there&apos;s a good chance I can pick it up quickly."}
             </p>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              My approach is to master the fundamentals deeply while staying
-              current with industry trends.
+              {isVi
+                ? "Cách mình làm là nắm thật chắc nền tảng, đồng thời luôn cập nhật xu hướng của ngành."
+                : "My approach is to master the fundamentals deeply while staying current with industry trends."}
             </p>
           </div>
 

@@ -5,10 +5,11 @@ import ProjectCard, { type ProjectItem } from "@/components/ui/ProjectCard";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import type { Language } from "../../lib/i18n";
 
 type TabKey = "all" | "fe" | "be" | "ai";
 
-const PROJECTS: ProjectItem[] = [
+const PROJECTS_EN: ProjectItem[] = [
   {
     title: "SoulSpace FE Expert",
     description:
@@ -65,6 +66,64 @@ const PROJECTS: ProjectItem[] = [
   },
 ];
 
+const PROJECTS_VI: ProjectItem[] = [
+  {
+    title: "SoulSpace FE Expert",
+    description:
+      "Giao diện ứng dụng di động cho nhóm chuyên gia của SoulSpace, tập trung vào hiệu năng và trải nghiệm dễ dùng.",
+    role: "Lập trình viên Frontend Mobile",
+    tags: ["React Native", "TypeScript", "Expo", "Mobile UI"],
+    highlight: "Xây dựng luồng thao tác mượt mà cho chuyên gia",
+    githubUrl:
+      "https://github.com/Chuyen-d-Mobile-va-Pervasive-Computing/SoulSpace-FE-Expert",
+    categories: ["FE"],
+  },
+  {
+    title: "SoulSpace FE Admin",
+    description:
+      "Dashboard web quản trị để quản lý tài nguyên nền tảng, người dùng và quy trình vận hành.",
+    role: "Lập trình viên Frontend Web",
+    tags: ["React", "TypeScript", "Dashboard", "Admin Panel"],
+    highlight: "Thiết kế trải nghiệm admin rõ ràng cho dữ liệu phức tạp",
+    githubUrl:
+      "https://github.com/Chuyen-d-Mobile-va-Pervasive-Computing/SoulSpace-FE-Admin",
+    categories: ["FE"],
+  },
+  {
+    title: "SoulSpace Backend",
+    description:
+      "Dịch vụ backend cốt lõi cho xác thực, nghiệp vụ và API dữ liệu trong hệ sinh thái SoulSpace.",
+    role: "Lập trình viên Backend",
+    tags: ["Node.js", "API", "Database", "Architecture"],
+    highlight: "Cung cấp API ổn định cho nhiều nền tảng client",
+    githubUrl:
+      "https://github.com/Chuyen-d-Mobile-va-Pervasive-Computing/SoulSpace-Backend",
+    categories: ["BE"],
+  },
+  {
+    title: "SE400 Seminar CNPM",
+    description:
+      "Dự án seminar định hướng AI, khám phá ứng dụng machine learning trong thực tế.",
+    role: "Kỹ sư AI",
+    tags: ["Python", "Machine Learning", "Data", "Research"],
+    highlight: "Áp dụng AI để tạo ra kết quả thực tiễn",
+    githubUrl: "https://github.com/FakerHecker/SE400_Seminar_CNPM",
+    categories: ["AI"],
+  },
+  {
+    title: "Student Management System BE",
+    description:
+      "Hệ thống backend quản lý vòng đời sinh viên, bao gồm tuyển sinh, hồ sơ học vụ và API dịch vụ.",
+    role: "Lập trình viên Backend",
+    tags: ["Backend", "REST API", "Database", "System Design"],
+    highlight:
+      "Xây dựng module backend có khả năng mở rộng cho bài toán giáo dục",
+    githubUrl:
+      "https://github.com/Se401-Student-Management-System/Student-Management-System-BE",
+    categories: ["BE"],
+  },
+];
+
 const TAB_CONFIG: Array<{ key: TabKey; label: string }> = [
   { key: "all", label: "All" },
   { key: "fe", label: "FE" },
@@ -88,7 +147,14 @@ function filterProjectsByTab(tab: TabKey, projects: ProjectItem[]) {
   );
 }
 
-export default function Projects() {
+interface ProjectsProps {
+  lang: Language;
+}
+
+export default function Projects({ lang }: ProjectsProps) {
+  const isVi = lang === "vi";
+  const projects = isVi ? PROJECTS_VI : PROJECTS_EN;
+
   const [activeTab, setActiveTab] = useState<TabKey>("all");
   const [expandedTabs, setExpandedTabs] = useState<Record<TabKey, boolean>>({
     all: false,
@@ -99,12 +165,12 @@ export default function Projects() {
 
   const projectsByTab = useMemo(
     () => ({
-      all: filterProjectsByTab("all", PROJECTS),
-      fe: filterProjectsByTab("fe", PROJECTS),
-      be: filterProjectsByTab("be", PROJECTS),
-      ai: filterProjectsByTab("ai", PROJECTS),
+      all: filterProjectsByTab("all", projects),
+      fe: filterProjectsByTab("fe", projects),
+      be: filterProjectsByTab("be", projects),
+      ai: filterProjectsByTab("ai", projects),
     }),
-    [],
+    [projects],
   );
 
   const handleViewMore = (tab: TabKey) => {
@@ -124,7 +190,7 @@ export default function Projects() {
       <div className="space-y-6">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           {visibleProjects.map((project) => (
-            <ProjectCard key={project.title} project={project} />
+            <ProjectCard key={project.title} project={project} lang={lang} />
           ))}
         </div>
 
@@ -135,7 +201,7 @@ export default function Projects() {
               className="h-11 px-8 text-base"
               onClick={() => handleViewMore(tab)}
             >
-              View more
+              {isVi ? "Xem thêm" : "View more"}
             </Button>
           </div>
         ) : null}
@@ -146,7 +212,9 @@ export default function Projects() {
   return (
     <section className="relative overflow-hidden">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 py-8">
-        <h1 className="text-5xl font-bold">Featured Projects</h1>
+        <h1 className="text-5xl font-bold">
+          {isVi ? "Dự án nổi bật" : "Featured Projects"}
+        </h1>
         <Separator className="data-horizontal:h-1 w-1/12! rounded-full bg-primary" />
 
         <Tabs
@@ -161,7 +229,7 @@ export default function Projects() {
                 value={tab.key}
                 className="rounded-lg px-5 text-sm font-semibold data-active:bg-primary data-active:text-primary-foreground"
               >
-                {tab.label}
+                {isVi && tab.key === "all" ? "Tất cả" : tab.label}
               </TabsTrigger>
             ))}
           </TabsList>
