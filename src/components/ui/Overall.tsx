@@ -37,8 +37,12 @@ export default function Overall({ lang }: OverallProps) {
 
   return (
     <section className="relative overflow-hidden">
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-12 py-8 lg:flex-row md:px-12">
-        <div className="w-full lg:w-1/2">
+      <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-8 py-8 md:px-12 lg:flex-row lg:gap-12">
+        <div className="relative order-1 flex h-70 w-full items-center justify-center sm:h-85 md:h-100 lg:order-2 lg:h-140 lg:w-1/2">
+          <Decorations />
+        </div>
+
+        <div className="order-2 w-full lg:order-1 lg:w-1/2">
           <div className="inline-flex items-center gap-3 rounded-full border border-primary/30 bg-secondary px-5 py-2 text-primary shadow-sm">
             <span className="relative flex h-3 w-3 items-center justify-center">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/60" />
@@ -98,10 +102,6 @@ export default function Overall({ lang }: OverallProps) {
               </a>
             </div>
           </div>
-        </div>
-
-        <div className="relative hidden h-136 w-full lg:block lg:w-1/2">
-          <Decorations />
         </div>
       </div>
     </section>

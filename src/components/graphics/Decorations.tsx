@@ -4,7 +4,7 @@ import { Database, Code, Star } from "lucide-react";
 
 export default function Decorations() {
   return (
-    <div className="w-full h-140 flex items-center justify-center">
+    <div className="w-full h-140 md:100 flex items-center justify-center">
       <div className="relative w-70 h-70">
         {/* Staying square */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none heartbeat-glow">
