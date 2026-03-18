@@ -87,7 +87,7 @@ export default function Footer() {
         <div className="flex md:justify-end">
           <a
             href="#overall"
-            className="bg-primary text-white px-5 py-2 rounded-xl hover:opacity-90 transition"
+            className="bg-primary text-white px-5 py-2 rounded-lg hover:opacity-90 transition"
           >
             Back to Top
           </a>

@@ -113,7 +113,7 @@ export default function Contact() {
 
             <button
               type="button"
-              className="flex h-12 w-full items-center justify-center gap-3 rounded-xl bg-primary px-6 text-base font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:opacity-95"
+              className="flex h-12 w-full items-center justify-center gap-3 rounded-lg bg-primary px-6 text-base font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:opacity-95"
             >
               Send Message
               <Send />

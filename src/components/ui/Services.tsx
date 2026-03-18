@@ -110,7 +110,7 @@ export default function Services() {
                 <h3 className="text-lg font-bold text-gray-900 items-start">
                   {item.title}
                 </h3>
-                <p className="mt-1 text-sm text-foreground/75 leading-relaxed">
+                <p className="mt-1 text-sm text-black leading-relaxed">
                   {item.desc}
                 </p>
               </div>
