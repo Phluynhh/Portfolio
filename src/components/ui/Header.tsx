@@ -1,14 +1,13 @@
 "use client";
 
-import { useState, useEffect, type MouseEvent } from "react";
-import { Globe, Moon, Sun } from "lucide-react";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  useState,
+  useEffect,
+  useRef,
+  type MouseEvent,
+  type KeyboardEvent,
+} from "react";
+import { Globe, Moon, Sun, ChevronDown, Check } from "lucide-react";
 
 const NAV_LINKS = [
   { label: "About", href: "#about" },
@@ -34,10 +33,35 @@ function getInitialTheme(): boolean {
 export default function Header() {
   const [lang, setLang] = useState("en");
   const [isDark, setIsDark] = useState(getInitialTheme);
+  const [isLangOpen, setIsLangOpen] = useState(false);
+  const langRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark);
   }, [isDark]);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent | globalThis.MouseEvent) {
+      if (!langRef.current) return;
+      if (!langRef.current.contains(event.target as Node)) {
+        setIsLangOpen(false);
+      }
+    }
+
+    function handleEscape(event: globalThis.KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsLangOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, []);
 
   function toggleTheme() {
     const next = !isDark;
@@ -56,19 +80,37 @@ export default function Header() {
     history.replaceState(null, "", `#${id}`);
   }
 
+  function handleLanguageSelect(value: string) {
+    setLang(value);
+    setIsLangOpen(false);
+  }
+
+  function handleTriggerKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      setIsLangOpen((prev) => !prev);
+    }
+
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setIsLangOpen(true);
+    }
+  }
+
+  const selectedLanguage =
+    LANGUAGES.find((language) => language.value === lang) ?? LANGUAGES[0];
+
   return (
-    <header className="fixed top-0 inset-x-0 z-50 h-20 border-b border-border bg-background/50 backdrop-blur-md">
-      <div className="mx-auto flex h-full w-full max-w-6xl items-center justify-between">
-        {/* Logo */}
+    <header className="fixed top-0 left-0 right-0 z-50 h-20 border-b border-border bg-background/50 backdrop-blur-md">
+      <div className="mx-auto flex h-full w-full max-w-6xl items-center justify-between px-4 md:px-6">
         <a
           href="#overall"
           onClick={(event) => scrollToSection(event, "#overall")}
-          className="text-2xl font-bold text-primary tracking-tight select-none"
+          className="select-none text-2xl font-bold tracking-tight text-primary"
         >
           Portfolio
         </a>
 
-        {/* Nav */}
         <nav>
           <ul className="flex items-center gap-7">
             {NAV_LINKS.map((link) => (
@@ -76,7 +118,7 @@ export default function Header() {
                 <a
                   href={link.href}
                   onClick={(event) => scrollToSection(event, link.href)}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
+                  className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {link.label}
                 </a>
@@ -85,28 +127,66 @@ export default function Header() {
           </ul>
         </nav>
 
-        {/* Right: Language + Theme */}
         <div className="flex items-center gap-3">
-          {/* Language select */}
-          <Select value={lang} onValueChange={setLang}>
-            <SelectTrigger className="gap-1.5 border-none shadow-none bg-transparent hover:bg-muted focus-visible:ring-0 focus-visible:border-transparent px-2 h-9 text-sm text-muted-foreground">
-              <Globe className="size-4 shrink-0" />
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent align="end">
-              {LANGUAGES.map((l) => (
-                <SelectItem key={l.value} value={l.value}>
-                  {l.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <div ref={langRef} className="relative">
+            <button
+              type="button"
+              aria-haspopup="listbox"
+              aria-expanded={isLangOpen}
+              aria-label="Select language"
+              onClick={() => setIsLangOpen((prev) => !prev)}
+              onKeyDown={handleTriggerKeyDown}
+              className="flex h-9 w-42.5 items-center justify-between rounded-xl px-3 text-sm text-muted-foreground transition-colors hover:bg-muted"
+            >
+              <span className="flex min-w-0 items-center gap-2">
+                <Globe className="size-4 shrink-0" />
+                <span className="w-23 truncate text-left">
+                  {selectedLanguage.label}
+                </span>
+              </span>
 
-          {/* Dark / Light toggle */}
+              <ChevronDown
+                className={`size-4 shrink-0 transition-transform ${
+                  isLangOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+
+            {isLangOpen && (
+              <div
+                role="listbox"
+                className="absolute top-full right-0 z-50 mt-2 w-42.5 overflow-hidden rounded-2xl border border-border bg-popover text-popover-foreground shadow-lg"
+              >
+                {LANGUAGES.map((language) => {
+                  const isSelected = language.value === lang;
+
+                  return (
+                    <button
+                      key={language.value}
+                      type="button"
+                      role="option"
+                      aria-selected={isSelected}
+                      onClick={() => handleLanguageSelect(language.value)}
+                      className="flex h-11 w-full items-center justify-between px-4 text-left text-sm transition-colors hover:bg-muted"
+                    >
+                      <span className="w-23 shrink-0 text-left">
+                        {language.label}
+                      </span>
+
+                      <span className="flex w-4 shrink-0 justify-center">
+                        {isSelected ? <Check className="size-4" /> : null}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
-            className="flex items-center justify-center size-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
             {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
           </button>
