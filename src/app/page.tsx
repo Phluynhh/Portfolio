@@ -1,9 +1,11 @@
 import About from "@/components/ui/About";
 import Contact from "@/components/ui/Contact";
 import Experience from "@/components/ui/Experience";
+import Footer from "@/components/ui/Footer";
 import Header from "@/components/ui/Header";
 import Overall from "@/components/ui/Overall";
 import Projects from "@/components/ui/Projects";
+import { Separator } from "@/components/ui/separator";
 import Services from "@/components/ui/Services";
 import Skills from "@/components/ui/Skills";
 
@@ -32,6 +34,8 @@ export default function Home() {
       <div id="contact" className="mt-4 scroll-mt-24">
         <Contact />
       </div>
+      <Separator />
+      <Footer />
     </div>
   );
 }
