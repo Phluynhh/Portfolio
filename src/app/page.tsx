@@ -3,6 +3,7 @@ import Experience from "@/components/ui/Experience";
 import Header from "@/components/ui/Header";
 import Overall from "@/components/ui/Overall";
 import Projects from "@/components/ui/Projects";
+import Services from "@/components/ui/Services";
 import Skills from "@/components/ui/Skills";
 
 export default function Home() {
@@ -23,6 +24,9 @@ export default function Home() {
       </div>
       <div id="experience" className="mt-4 scroll-mt-24">
         <Experience />
+      </div>
+      <div id="services" className="mt-4 scroll-mt-24">
+        <Services />
       </div>
     </div>
   );
