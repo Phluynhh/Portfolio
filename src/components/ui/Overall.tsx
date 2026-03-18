@@ -37,7 +37,7 @@ export default function Overall({ lang }: OverallProps) {
 
   return (
     <section className="relative overflow-hidden">
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-12 py-8 lg:flex-row">
+      <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-12 py-8 lg:flex-row md:px-12">
         <div className="w-full lg:w-1/2">
           <div className="inline-flex items-center gap-3 rounded-full border border-primary/30 bg-secondary px-5 py-2 text-primary shadow-sm">
             <span className="relative flex h-3 w-3 items-center justify-center">

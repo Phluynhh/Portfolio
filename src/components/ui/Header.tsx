@@ -117,7 +117,7 @@ export default function Header({ lang, onLanguageChange }: HeaderProps) {
   const navLinks = NAV_LINKS[lang];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-20 border-b border-border bg-background/50 backdrop-blur-md">
+    <header className="fixed top-0 left-0 right-0 z-50 h-20 border-b border-border bg-background/50 backdrop-blur-md md:px-8">
       <div className="mx-auto flex h-full w-full max-w-6xl items-center justify-between px-4 md:px-6">
         <a
           href="#overall"
