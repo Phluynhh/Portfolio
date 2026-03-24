@@ -15,9 +15,7 @@ export default function Overall({ lang }: OverallProps) {
   const headline = isVi
     ? "Lập trình viên Fullstack xây dựng sản phẩm Web và AI hiện đại"
     : "Fullstack Developer Building Modern Web & AI Products";
-  const skills = isVi
-    ? ["Fullstack", "Frontend", "Backend", "AI/ML"]
-    : ["Fullstack", "Frontend", "Backend", "AI/ML"];
+  const skills = ["Fullstack", "Frontend", "Backend", "AI/ML"];
   const [typedHeadline, setTypedHeadline] = useState("");
 
   useEffect(() => {
@@ -38,7 +36,7 @@ export default function Overall({ lang }: OverallProps) {
   return (
     <section className="relative overflow-hidden">
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-8 px-4 py-8 md:px-12 lg:flex-row lg:gap-12">
-        <div className="relative order-1 flex h-70 w-full items-center justify-center mt-20 sm:h-85 md:h-100 lg:order-2 lg:h-140 lg:w-1/2">
+        <div className="relative order-1 mt-20 flex h-70 w-full items-center justify-center sm:h-85 md:h-100 lg:order-2 lg:h-140 lg:w-1/2">
           <Decorations />
         </div>
 
@@ -79,12 +77,18 @@ export default function Overall({ lang }: OverallProps) {
           </div>
 
           <div className="mt-8">
-            <Button className="text-base">
-              {isVi ? "Xem dự án" : "View Projects"}
-              <MoveRight />
+            <Button asChild className="p-4 text-base hover:cursor-pointer">
+              <a href="#projects">
+                {isVi ? "Xem dự án" : "View Projects"}
+                <MoveRight />
+              </a>
             </Button>
-            <Button variant={"secondary"} className="ml-2 text-base">
-              {isVi ? "Liên hệ" : "Contact Me"}
+            <Button
+              asChild
+              variant="secondary"
+              className="ml-2 p-4 text-base hover:cursor-pointer"
+            >
+              <a href="#contact">{isVi ? "Liên hệ" : "Contact Me"}</a>
             </Button>
           </div>
 
