@@ -155,7 +155,7 @@ export default function Skills({ lang }: SkillsProps) {
             <p className="text-base leading-7 text-foreground/90">
               {isVi
                 ? "Mình luôn học hỏi và khám phá công nghệ mới. Nếu bạn đang tìm một tech stack cụ thể, khả năng cao là mình có thể nắm bắt rất nhanh."
-                : "I&apos;m always learning and exploring new technologies. If there&apos;s a specific tech stack you&apos;re looking for, there&apos;s a good chance I can pick it up quickly."}
+                : "I'm always learning and exploring new technologies. If there's a specific tech stack you're looking for, there's a good chance I can pick it up quickly."}
             </p>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
               {isVi
