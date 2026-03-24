@@ -8,6 +8,7 @@ import {
   type KeyboardEvent,
 } from "react";
 import { Globe, Moon, Sun, ChevronDown, Check, Menu, X } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import type { Language } from "../../lib/i18n";
 
 const NAV_LINKS: Record<Language, Array<{ label: string; href: string }>> = {
@@ -51,6 +52,7 @@ export default function Header({ lang, onLanguageChange }: HeaderProps) {
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const langRef = useRef<HTMLDivElement | null>(null);
+  const isCompactHeader = useIsMobile(1024);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark);
@@ -121,8 +123,12 @@ export default function Header({ lang, onLanguageChange }: HeaderProps) {
   const navLinks = NAV_LINKS[lang];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-20 border-b border-border bg-background/50 backdrop-blur-md md:px-8">
-      <div className="mx-auto flex h-full w-full max-w-6xl items-center justify-between px-4 md:px-6">
+    <header className="fixed top-0 left-0 right-0 z-50 h-20 border-b border-border bg-background/50 backdrop-blur-md lg:px-8">
+      <div
+        className={`mx-auto h-full w-full max-w-6xl items-center px-4 md:px-6 ${
+          isCompactHeader ? "flex justify-between" : "relative flex justify-between"
+        }`}
+      >
         <a
           href="#overall"
           onClick={(event) => scrollToSection(event, "#overall")}
@@ -131,106 +137,115 @@ export default function Header({ lang, onLanguageChange }: HeaderProps) {
           Portfolio
         </a>
 
-        <nav className="hidden md:block">
-          <ul className="flex items-center gap-7">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  onClick={(event) => scrollToSection(event, link.href)}
-                  className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <div className="hidden items-center gap-3 md:flex">
-          <div ref={langRef} className="relative">
-            <button
-              type="button"
-              aria-haspopup="listbox"
-              aria-expanded={isLangOpen}
-              aria-label={lang === "vi" ? "Chọn ngôn ngữ" : "Select language"}
-              onClick={() => setIsLangOpen((prev) => !prev)}
-              onKeyDown={handleTriggerKeyDown}
-              className="flex h-9 w-42.5 items-center justify-between rounded-xl px-3 text-sm text-muted-foreground transition-colors hover:bg-muted"
-            >
-              <span className="flex min-w-0 items-center gap-2">
-                <Globe className="size-4 shrink-0" />
-                <span className="w-23 truncate text-left">
-                  {selectedLanguage.label}
-                </span>
-              </span>
-
-              <ChevronDown
-                className={`size-4 shrink-0 transition-transform ${
-                  isLangOpen ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-
-            {isLangOpen && (
-              <div
-                role="listbox"
-                className="absolute top-full right-0 z-50 mt-2 w-42.5 overflow-hidden rounded-2xl border border-border bg-popover text-popover-foreground shadow-lg"
-              >
-                {LANGUAGES.map((language) => {
-                  const isSelected = language.value === lang;
-
-                  return (
-                    <button
-                      key={language.value}
-                      type="button"
-                      role="option"
-                      aria-selected={isSelected}
-                      onClick={() =>
-                        handleLanguageSelect(language.value as Language)
-                      }
-                      className="flex h-11 w-full items-center justify-between px-4 text-left text-sm transition-colors hover:bg-muted"
+        {!isCompactHeader && (
+          <>
+            <nav className="absolute left-1/2 hidden -translate-x-1/2 lg:block">
+              <ul className="flex items-center gap-7">
+                {navLinks.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      onClick={(event) => scrollToSection(event, link.href)}
+                      className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
                     >
-                      <span className="w-23 shrink-0 text-left">
-                        {language.label}
-                      </span>
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-                      <span className="flex w-4 shrink-0 justify-center">
-                        {isSelected ? <Check className="size-4" /> : null}
-                      </span>
-                    </button>
-                  );
-                })}
+            <div className="hidden items-center gap-3 lg:flex">
+              <div ref={langRef} className="relative">
+                <button
+                  type="button"
+                  aria-haspopup="listbox"
+                  aria-expanded={isLangOpen}
+                  aria-label={lang === "vi" ? "Chọn ngôn ngữ" : "Select language"}
+                  onClick={() => setIsLangOpen((prev) => !prev)}
+                  onKeyDown={handleTriggerKeyDown}
+                  className="flex h-9 w-42.5 items-center justify-between rounded-xl px-3 text-sm text-muted-foreground transition-colors hover:bg-muted"
+                >
+                  <span className="flex min-w-0 items-center gap-2">
+                    <Globe className="size-4 shrink-0" />
+                    <span className="w-23 truncate text-left">
+                      {selectedLanguage.label}
+                    </span>
+                  </span>
+
+                  <ChevronDown
+                    className={`size-4 shrink-0 transition-transform ${
+                      isLangOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {isLangOpen && (
+                  <div
+                    role="listbox"
+                    className="absolute top-full right-0 z-50 mt-2 w-42.5 overflow-hidden rounded-2xl border border-border bg-popover text-popover-foreground shadow-lg"
+                  >
+                    {LANGUAGES.map((language) => {
+                      const isSelected = language.value === lang;
+
+                      return (
+                        <button
+                          key={language.value}
+                          type="button"
+                          role="option"
+                          aria-selected={isSelected}
+                          onClick={() =>
+                            handleLanguageSelect(language.value as Language)
+                          }
+                          className="flex h-11 w-full items-center justify-between px-4 text-left text-sm transition-colors hover:bg-muted"
+                        >
+                          <span className="w-23 shrink-0 text-left">
+                            {language.label}
+                          </span>
+
+                          <span className="flex w-4 shrink-0 justify-center">
+                            {isSelected ? <Check className="size-4" /> : null}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+
+              <button
+                onClick={toggleTheme}
+                aria-label={lang === "vi" ? "Đổi giao diện" : "Toggle theme"}
+                className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              >
+                {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
+              </button>
+            </div>
+          </>
+        )}
+
+        {isCompactHeader && (
           <button
-            onClick={toggleTheme}
-            aria-label={lang === "vi" ? "Đổi giao diện" : "Toggle theme"}
-            className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            type="button"
+            onClick={() => setIsMobileMenuOpen(true)}
+            aria-label={lang === "vi" ? "Mở menu" : "Open menu"}
+            className="flex size-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
-            {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
+            <Menu className="size-5" />
           </button>
-        </div>
-        <button
-          type="button"
-          onClick={() => setIsMobileMenuOpen(true)}
-          aria-label={lang === "vi" ? "Mở menu" : "Open menu"}
-          className="flex size-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground md:hidden"
-        >
-          <Menu className="size-5" />
-        </button>
+        )}
       </div>
-      {isMobileMenuOpen && (
+
+      {isCompactHeader && isMobileMenuOpen && (
         <>
           <button
             type="button"
             aria-label={lang === "vi" ? "Đóng menu" : "Close menu"}
             onClick={() => setIsMobileMenuOpen(false)}
-            className="fixed inset-0 z-40 bg-black/40 md:hidden"
+            className="fixed inset-0 z-40 bg-black/40"
           />
 
-          <div className="fixed top-0 right-0 z-50 flex h-dvh w-[82%] max-w-[320px] flex-col border-l border-border bg-background p-5 shadow-2xl md:hidden">
+          <div className="fixed top-0 right-0 z-50 flex h-dvh w-[82%] max-w-[320px] flex-col border-l border-border bg-background p-5 shadow-2xl">
             <div className="flex items-center justify-between">
               <p className="text-lg font-semibold text-foreground">Menu</p>
               <button
@@ -265,9 +280,7 @@ export default function Header({ lang, onLanguageChange }: HeaderProps) {
                   type="button"
                   aria-haspopup="listbox"
                   aria-expanded={isLangOpen}
-                  aria-label={
-                    lang === "vi" ? "Chọn ngôn ngữ" : "Select language"
-                  }
+                  aria-label={lang === "vi" ? "Chọn ngôn ngữ" : "Select language"}
                   onClick={() => setIsLangOpen((prev) => !prev)}
                   onKeyDown={handleTriggerKeyDown}
                   className="flex h-11 w-full items-center justify-between rounded-xl border border-border px-3 text-sm text-muted-foreground transition-colors hover:bg-muted"
@@ -319,13 +332,9 @@ export default function Header({ lang, onLanguageChange }: HeaderProps) {
               <button
                 onClick={toggleTheme}
                 aria-label={lang === "vi" ? "Đổi giao diện" : "Toggle theme"}
-                className="mt-3 flex h-full w-full items-center justify-center gap-2 rounded-xl border border-border text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-border text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               >
-                {isDark ? (
-                  <Sun className="size-4" />
-                ) : (
-                  <Moon className="size-4" />
-                )}
+                {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
                 <span>{lang === "vi" ? "Giao diện" : "Theme"}</span>
               </button>
             </div>
