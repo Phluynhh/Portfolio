@@ -12,7 +12,7 @@ export default function About({ lang }: AboutProps) {
 
   return (
     <section className="relative overflow-hidden">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 py-8 md:px-12">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 md:px-12">
         <h1 className="text-5xl font-bold">
           {isVi ? "Giới thiệu" : "About me"}
         </h1>

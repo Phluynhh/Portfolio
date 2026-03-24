@@ -127,7 +127,7 @@ export default function Services({ lang }: ServicesProps) {
 
   return (
     <section className="relative overflow-hidden">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 py-8 md:px-12">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 md:px-12">
         <h1 className="text-5xl font-bold">{isVi ? "Dịch vụ" : "Services"}</h1>
         <Separator className="data-horizontal:h-1 w-1/12! rounded-full bg-primary" />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">

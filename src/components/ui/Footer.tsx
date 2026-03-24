@@ -10,7 +10,7 @@ export default function Footer({ lang }: FooterProps) {
   const isVi = lang === "vi";
 
   return (
-    <footer className="w-full px-6 md:px-12 lg:px-20 py-12">
+    <footer className="w-full px-4 py-12 md:px-12 lg:px-20">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-10 items-start">
         {/* Column 1 - Portfolio */}
         <div>
