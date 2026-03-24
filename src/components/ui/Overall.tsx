@@ -15,9 +15,7 @@ export default function Overall({ lang }: OverallProps) {
   const headline = isVi
     ? "Lập trình viên Fullstack xây dựng sản phẩm Web và AI hiện đại"
     : "Fullstack Developer Building Modern Web & AI Products";
-  const skills = isVi
-    ? ["Fullstack", "Frontend", "Backend", "AI/ML"]
-    : ["Fullstack", "Frontend", "Backend", "AI/ML"];
+  const skills = ["Fullstack", "Frontend", "Backend", "AI/ML"];
   const [typedHeadline, setTypedHeadline] = useState("");
 
   useEffect(() => {
@@ -37,8 +35,12 @@ export default function Overall({ lang }: OverallProps) {
 
   return (
     <section className="relative overflow-hidden">
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-12 py-8 lg:flex-row">
-        <div className="w-full lg:w-1/2">
+      <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-8 px-4 py-8 md:px-12 lg:flex-row lg:gap-12">
+        <div className="relative order-1 mt-20 flex h-70 w-full items-center justify-center sm:h-85 md:h-100 lg:order-2 lg:h-140 lg:w-1/2">
+          <Decorations />
+        </div>
+
+        <div className="order-2 w-full lg:order-1 lg:w-1/2">
           <div className="inline-flex items-center gap-3 rounded-full border border-primary/30 bg-secondary px-5 py-2 text-primary shadow-sm">
             <span className="relative flex h-3 w-3 items-center justify-center">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/60" />
@@ -75,12 +77,18 @@ export default function Overall({ lang }: OverallProps) {
           </div>
 
           <div className="mt-8">
-            <Button className="text-base">
-              {isVi ? "Xem dự án" : "View Projects"}
-              <MoveRight />
+            <Button asChild className="p-4 text-base hover:cursor-pointer">
+              <a href="#projects">
+                {isVi ? "Xem dự án" : "View Projects"}
+                <MoveRight />
+              </a>
             </Button>
-            <Button variant={"secondary"} className="ml-2 text-base">
-              {isVi ? "Liên hệ" : "Contact Me"}
+            <Button
+              asChild
+              variant="secondary"
+              className="ml-2 p-4 text-base hover:cursor-pointer"
+            >
+              <a href="#contact">{isVi ? "Liên hệ" : "Contact Me"}</a>
             </Button>
           </div>
 
@@ -98,10 +106,6 @@ export default function Overall({ lang }: OverallProps) {
               </a>
             </div>
           </div>
-        </div>
-
-        <div className="relative hidden h-136 w-full lg:block lg:w-1/2">
-          <Decorations />
         </div>
       </div>
     </section>
