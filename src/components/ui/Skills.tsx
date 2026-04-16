@@ -164,7 +164,7 @@ export default function Skills({ lang }: SkillsProps) {
   const selectedField =
     skillFields.find((field) => field.key === selectedFieldKey) ??
     skillFields[0];
-  const ringDiameter = isMobile ? 194 : isTablet ? 246 : 316;
+  const ringDiameter = isMobile ? 220 : isTablet ? 276 : 388;
   const ringRadius = ringDiameter / 2;
 
   const orbitConfig = useMemo(
