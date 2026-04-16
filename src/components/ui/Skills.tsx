@@ -188,7 +188,7 @@ export default function Skills({ lang }: SkillsProps) {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 md:px-12">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-12 md:px-12">
         <h1 className="text-5xl font-bold">
           {isVi ? "Kỹ năng & Chuyên môn" : "Skills & Expertise"}
         </h1>
