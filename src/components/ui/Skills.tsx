@@ -136,7 +136,7 @@ export default function Skills({ lang }: SkillsProps) {
       {
         key: "ai-llm",
         title: isVi ? "AI & LLM Integrations" : "AI & LLM Integrations",
-        shortLabel: "AI / LLM",
+        shortLabel: "AI-LLM",
         icon: BrainCircuit,
         description: isVi
           ? "Tich hop AI vao san pham voi tra cuu ngu nghia va RAG."
@@ -164,22 +164,26 @@ export default function Skills({ lang }: SkillsProps) {
   const selectedField =
     skillFields.find((field) => field.key === selectedFieldKey) ??
     skillFields[0];
+  const ringDiameter = isMobile ? 194 : isTablet ? 246 : 316;
+  const ringRadius = ringDiameter / 2;
 
   const orbitConfig = useMemo(
     () =>
       skillFields.map((field, index) => {
         const angle = -90 + index * (360 / skillFields.length);
         const radians = (angle * Math.PI) / 180;
-        const radius = isMobile ? 112 : isTablet ? 136 : 170;
+        const nodeSize = isMobile ? 56 : isTablet ? 64 : 68;
+        const radius = ringRadius;
 
         return {
           field,
           x: Math.cos(radians) * radius,
           y: Math.sin(radians) * radius,
+          nodeSize,
           delay: 0.25 + index * 0.16,
         };
       }),
-    [isMobile, isTablet, skillFields],
+    [isMobile, isTablet, ringRadius, skillFields],
   );
 
   return (
@@ -190,7 +194,7 @@ export default function Skills({ lang }: SkillsProps) {
         </h1>
         <Separator className="data-horizontal:h-1 w-1/12! rounded-full bg-primary" />
 
-        <div className=" inline-flex items-center mt-4 justify-center lg:w-full">
+        <div className="mt-4 inline-flex items-center justify-center lg:w-full">
           <div className="space-y-6 rounded-3xl border border-border/70 bg-card/70 p-5 shadow-sm backdrop-blur-sm sm:p-7 lg:w-1/3">
             <div className="space-y-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
               <p>
@@ -248,13 +252,17 @@ export default function Skills({ lang }: SkillsProps) {
 
                 <motion.div
                   aria-hidden="true"
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0.92 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ duration: 0.6, delay: 0.15 }}
-                  className="absolute top-1/2 left-1/2 h-60 w-60 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20 sm:h-75 sm:w-75 lg:h-95 lg:w-95"
+                  style={{
+                    width: `${ringDiameter}px`,
+                    height: `${ringDiameter}px`,
+                  }}
+                  className="pointer-events-none absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20"
                 />
 
-                {orbitConfig.map(({ field, x, y, delay }) => {
+                {orbitConfig.map(({ field, x, y, nodeSize, delay }) => {
                   const Icon = field.icon;
                   const isSelected = selectedField.key === field.key;
 
@@ -279,17 +287,20 @@ export default function Skills({ lang }: SkillsProps) {
                         delay,
                         ease: "easeOut",
                       }}
-                      className={`absolute top-1/2 left-1/2 z-30 flex h-18 w-18 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border text-center transition-all duration-300 sm:h-20 sm:w-20 lg:h-24 lg:w-24 ${
+                      style={{
+                        width: `${nodeSize}px`,
+                        height: `${nodeSize}px`,
+                        minWidth: `${nodeSize}px`,
+                        minHeight: `${nodeSize}px`,
+                      }}
+                      className={`absolute top-1/2 left-1/2 z-30 flex aspect-square shrink-0 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border p-0 text-center transition-all duration-300 ${
                         isSelected
                           ? "border-primary bg-primary text-primary-foreground shadow-lg"
-                          : "border-border bg-card/95 text-foreground hover:border-primary/60 hover:bg-accent"
+                          : "border-border bg-white text-foreground shadow-sm hover:border-primary/60"
                       }`}
                       aria-label={field.title}
                     >
                       <Icon className="size-4 sm:size-5" />
-                      <span className="mt-1 px-1 text-[10px] font-semibold leading-tight sm:text-xs">
-                        {field.shortLabel}
-                      </span>
                     </motion.button>
                   );
                 })}
