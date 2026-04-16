@@ -259,7 +259,7 @@ export default function Skills({ lang }: SkillsProps) {
                     width: `${ringDiameter}px`,
                     height: `${ringDiameter}px`,
                   }}
-                  className="pointer-events-none absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20"
+                  className="pointer-events-none absolute top-1/2 left-1/2 z-0 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20"
                 />
 
                 {orbitConfig.map(({ field, x, y, nodeSize, delay }) => {
