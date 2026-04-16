@@ -1,22 +1,19 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import {
   BrainCircuit,
   Code,
   Database,
-  GraduationCap,
   Layers,
-  Rocket,
   Server,
-  Sparkles,
   Wrench,
 } from "lucide-react";
 import { motion, useInView } from "framer-motion";
-import SkillCard from "@/components/ui/SkillCard";
 import type { Language } from "../../lib/i18n";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const frontendSkills = [
   "HTML5",
@@ -78,223 +75,226 @@ interface SkillsProps {
   lang: Language;
 }
 
+type SkillField = {
+  key: string;
+  title: string;
+  shortLabel: string;
+  icon: React.ElementType;
+  description: string;
+  skills: string[];
+};
+
 export default function Skills({ lang }: SkillsProps) {
   const isVi = lang === "vi";
-  const profileHighlights = [
-    {
-      title: isVi ? "Đang học tại" : "Studying at",
-      value: "UIT - VNU HCM",
-      icon: GraduationCap,
-      className:
-        "left-0 top-14 sm:left-2 md:-left-2 md:top-18 lg:left-0 xl:-left-2",
-    },
-    {
-      title: isVi ? "Trọng tâm" : "Main focus",
-      value: "FE & BE",
-      icon: Rocket,
-      className:
-        "right-0 top-36 sm:right-2 md:-right-4 md:top-40 lg:right-0 xl:-right-6",
-    },
-    {
-      title: isVi ? "Đang khám phá" : "Exploring",
-      value: "AI, RAG & LLM Apps",
-      icon: Sparkles,
-      className: "bottom-6 left-1/2 -translate-x-1/2 md:bottom-0 lg:bottom-2",
-    },
-  ];
+  const isMobile = useIsMobile(768);
+  const isTablet = useIsMobile(1024);
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.25 });
 
-  const imageSectionRef = useRef<HTMLDivElement | null>(null);
-  const isInView = useInView(imageSectionRef, {
-    once: true,
-    margin: "-100px 0px",
-  });
+  const skillFields = useMemo<SkillField[]>(
+    () => [
+      {
+        key: "frontend",
+        title: isVi ? "Frontend Development" : "Frontend Development",
+        shortLabel: "Frontend",
+        icon: Code,
+        description: isVi
+          ? "Xay dung giao dien nhanh, toi uu va de mo rong."
+          : "Building fast, scalable, and polished interfaces.",
+        skills: frontendSkills,
+      },
+      {
+        key: "backend",
+        title: isVi ? "Backend Development" : "Backend Development",
+        shortLabel: "Backend",
+        icon: Server,
+        description: isVi
+          ? "Thiet ke API va xu ly nghiep vu phia server on dinh."
+          : "Designing stable APIs and backend business logic.",
+        skills: backendSkills,
+      },
+      {
+        key: "database",
+        title: isVi ? "Database & Storage" : "Database & Storage",
+        shortLabel: "Database",
+        icon: Database,
+        description: isVi
+          ? "Lam viec voi he quan tri du lieu va toi uu truy van."
+          : "Working with data systems and query optimization.",
+        skills: databaseSkills,
+      },
+      {
+        key: "fullstack",
+        title: isVi ? "Fullstack Practices" : "Fullstack Practices",
+        shortLabel: "Fullstack",
+        icon: Layers,
+        description: isVi
+          ? "Ket noi frontend va backend trong cac ung dung thuc te."
+          : "Bridging frontend and backend in real-world apps.",
+        skills: fullstackSkills,
+      },
+      {
+        key: "ai-llm",
+        title: isVi ? "AI & LLM Integrations" : "AI & LLM Integrations",
+        shortLabel: "AI / LLM",
+        icon: BrainCircuit,
+        description: isVi
+          ? "Tich hop AI vao san pham voi tra cuu ngu nghia va RAG."
+          : "Integrating AI features including semantic and RAG systems.",
+        skills: aiLlmSkills,
+      },
+      {
+        key: "tools",
+        title: isVi ? "Tools & Workflow" : "Tools & Workflow",
+        shortLabel: "Tools",
+        icon: Wrench,
+        description: isVi
+          ? "Toi uu quy trinh phat trien voi cong cu va quy trinh phu hop."
+          : "Optimizing development workflow with the right tools.",
+        skills: toolSkills,
+      },
+    ],
+    [isVi],
+  );
+
+  const [selectedFieldKey, setSelectedFieldKey] = useState<string>(
+    skillFields[0]?.key ?? "frontend",
+  );
+
+  const selectedField =
+    skillFields.find((field) => field.key === selectedFieldKey) ??
+    skillFields[0];
+
+  const orbitConfig = useMemo(
+    () =>
+      skillFields.map((field, index) => {
+        const angle = -90 + index * (360 / skillFields.length);
+        const radians = (angle * Math.PI) / 180;
+        const radius = isMobile ? 112 : isTablet ? 136 : 170;
+
+        return {
+          field,
+          x: Math.cos(radians) * radius,
+          y: Math.sin(radians) * radius,
+          delay: 0.25 + index * 0.16,
+        };
+      }),
+    [isMobile, isTablet, skillFields],
+  );
 
   return (
-    <section className="relative overflow-hidden">
+    <section ref={sectionRef} className="relative overflow-hidden">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 md:px-12">
         <h1 className="text-5xl font-bold">
           {isVi ? "Kỹ năng & Chuyên môn" : "Skills & Expertise"}
         </h1>
         <Separator className="data-horizontal:h-1 w-1/12! rounded-full bg-primary" />
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-          <SkillCard
-            title="Frontend"
-            icon={<Code className="text-primary" />}
-            skills={frontendSkills}
-          />
-          <SkillCard
-            title="Backend"
-            icon={<Server className="text-primary" />}
-            skills={backendSkills}
-          />
-          <SkillCard
-            title={isVi ? "Cơ sở dữ liệu" : "Databases"}
-            icon={<Database className="text-primary" />}
-            skills={databaseSkills}
-          />
-          <SkillCard
-            title="Fullstack"
-            icon={<Layers className="text-primary" />}
-            skills={fullstackSkills}
-          />
-          <SkillCard
-            title="AI & LLM"
-            icon={<BrainCircuit className="text-primary" />}
-            skills={aiLlmSkills}
-          />
-          <SkillCard
-            title={isVi ? "Công cụ" : "Tools"}
-            icon={<Wrench className="text-primary" />}
-            skills={toolSkills}
-          />
-        </div>
+        <div className=" inline-flex items-center mt-4 justify-center lg:w-full">
+          <div className="space-y-6 rounded-3xl border border-border/70 bg-card/70 p-5 shadow-sm backdrop-blur-sm sm:p-7 lg:w-1/3">
+            <div className="space-y-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
+              <p>
+                I&apos;m always learning and exploring new technologies. If
+                there&apos;s a specific tech stack you&apos;re looking for,
+                there&apos;s a good chance I can pick it up quickly.
+              </p>
+              <p>
+                My approach is to master the fundamentals deeply while staying
+                current with industry trends.
+              </p>
+            </div>
 
-        <div className="flex w-full flex-col gap-6 lg:flex-row lg:items-center">
-          <div className="w-full rounded-3xl border border-bs-accent-foreground/20 bg-sidebar p-8 shadow-sm lg:w-1/2">
-            <p className="text-base leading-7 text-foreground/90">
-              {isVi
-                ? "Mình luôn học hỏi và khám phá công nghệ mới. Nếu bạn đang tìm một tech stack cụ thể, khả năng cao là mình có thể nắm bắt rất nhanh."
-                : "I'm always learning and exploring new technologies. If there's a specific tech stack you're looking for, there's a good chance I can pick it up quickly."}
-            </p>
-            <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              {isVi
-                ? "Cách mình làm là nắm thật chắc nền tảng, đồng thời luôn cập nhật xu hướng của ngành."
-                : "My approach is to master the fundamentals deeply while staying current with industry trends."}
-            </p>
+            <div className="space-y-3 border-t border-border/70 pt-5">
+              <div>
+                <p className="text-sm font-semibold text-foreground sm:text-base">
+                  {selectedField.title}
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
+                  {selectedField.description}
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {selectedField.skills.map((skill) => (
+                  <span
+                    key={skill}
+                    className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary sm:text-sm"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
 
-          <div
-            ref={imageSectionRef}
-            className="flex w-full justify-center lg:w-1/2"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.7, y: 60 }}
-              animate={
-                isInView
-                  ? { opacity: 1, scale: 1, y: 0 }
-                  : { opacity: 0, scale: 0.7, y: 60 }
-              }
-              transition={{
-                type: "spring",
-                stiffness: 120,
-                damping: 10,
-                mass: 0.8,
-              }}
-              className="relative flex h-115 w-full max-w-130 items-center justify-center sm:h-125"
-            >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.6 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{
-                  type: "spring",
-                  stiffness: 100,
-                  damping: 12,
-                  delay: 0.08,
-                }}
-                className="absolute h-46.25 w-46.25 rounded-full bg-primary/15 blur-3xl sm:h-52.5 sm:w-52.5"
-              />
+          <div className="lg:w-2/3">
+            <div className="mx-auto flex h-82.5 w-full max-w-95 items-center justify-center sm:h-95 sm:max-w-105 md:h-100 md:max-w-110 lg:h-130 lg:max-w-140">
+              <div className="relative h-80 w-80 sm:h-90 sm:w-90 md:h-95 md:w-95 lg:h-125 lg:w-125">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.88 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ duration: 0.55, ease: "easeOut" }}
+                  className="absolute top-1/2 left-1/2 z-20 h-34 w-34 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border border-sky-500 bg-background shadow-lg sm:h-40 sm:w-40 lg:h-52 lg:w-52"
+                >
+                  <Image
+                    src="/body.png"
+                    alt="Profile"
+                    fill
+                    sizes="(max-width: 640px) 136px, (max-width: 1024px) 160px, 208px"
+                    className="object-cover"
+                    priority={false}
+                  />
+                </motion.div>
 
-              <motion.div
-                initial={{ opacity: 0, scale: 0.68 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{
-                  type: "spring",
-                  stiffness: 100,
-                  damping: 12,
-                  delay: 0.14,
-                }}
-                className="absolute h-62.5 w-62.5 rounded-full bg-primary/15 sm:h-70 sm:w-70"
-              />
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8, rotate: -8 }}
-                animate={
-                  isInView
-                    ? { opacity: 1, scale: 1, rotate: 0 }
-                    : { opacity: 0, scale: 0.8, rotate: -8 }
-                }
-                transition={{
-                  type: "spring",
-                  stiffness: 95,
-                  damping: 12,
-                  delay: 0.2,
-                }}
-                className="absolute h-76.25 w-76.25 rounded-full border-4 border-dashed border-primary/35 sm:h-85 sm:w-85"
-              />
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.75, y: 40 }}
-                animate={
-                  isInView
-                    ? { opacity: 1, scale: 1, y: 0 }
-                    : { opacity: 0, scale: 0.75, y: 40 }
-                }
-                transition={{
-                  type: "spring",
-                  stiffness: 140,
-                  damping: 9,
-                  delay: 0.26,
-                }}
-                className="relative z-10 flex h-82.5 w-65 items-end justify-center sm:h-92.5 sm:w-72.5"
-              >
-                <Image
-                  src="/camera.png"
-                  alt="Profile photo"
-                  width={420}
-                  height={520}
-                  className="h-full w-auto object-contain drop-shadow-[0_20px_35px_hsl(var(--primary)/0.18)]"
-                  unoptimized
-                  priority
+                <motion.div
+                  aria-hidden="true"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ duration: 0.6, delay: 0.15 }}
+                  className="absolute top-1/2 left-1/2 h-60 w-60 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20 sm:h-75 sm:w-75 lg:h-95 lg:w-95"
                 />
-              </motion.div>
 
-              {profileHighlights.map((item, index) => {
-                const Icon = item.icon;
+                {orbitConfig.map(({ field, x, y, delay }) => {
+                  const Icon = field.icon;
+                  const isSelected = selectedField.key === field.key;
 
-                return (
-                  <motion.div
-                    key={item.title}
-                    initial={{ opacity: 0, scale: 0.6, y: 20 }}
-                    animate={
-                      isInView
-                        ? { opacity: 1, scale: 1, y: 0 }
-                        : { opacity: 0, scale: 0.6, y: 20 }
-                    }
-                    whileHover={{
-                      scale: 1.05,
-                      y: -4,
-                      transition: {
-                        type: "spring",
-                        stiffness: 300,
-                        damping: 15,
-                      },
-                    }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 180,
-                      damping: 10,
-                      delay: 0.38 + index * 0.12,
-                    }}
-                    className={`absolute z-20 rounded-2xl border border-border/50 bg-background/90 px-4 py-3 shadow-[0_10px_30px_hsl(var(--foreground)/0.08)] backdrop-blur-sm ${item.className}`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/12 text-primary">
-                        <Icon size={18} />
-                      </div>
-                      <div>
-                        <p className="text-lg font-bold leading-none text-foreground">
-                          {item.value}
-                        </p>
-                        <p className="mt-1 whitespace-nowrap text-sm leading-none text-muted-foreground">
-                          {item.title}
-                        </p>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
+                  return (
+                    <motion.button
+                      key={field.key}
+                      type="button"
+                      onClick={() => setSelectedFieldKey(field.key)}
+                      initial={{ opacity: 0, scale: 0.3 }}
+                      animate={
+                        isInView
+                          ? {
+                              opacity: 1,
+                              scale: 1,
+                              x,
+                              y,
+                            }
+                          : {}
+                      }
+                      transition={{
+                        duration: 0.5,
+                        delay,
+                        ease: "easeOut",
+                      }}
+                      className={`absolute top-1/2 left-1/2 z-30 flex h-18 w-18 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border text-center transition-all duration-300 sm:h-20 sm:w-20 lg:h-24 lg:w-24 ${
+                        isSelected
+                          ? "border-primary bg-primary text-primary-foreground shadow-lg"
+                          : "border-border bg-card/95 text-foreground hover:border-primary/60 hover:bg-accent"
+                      }`}
+                      aria-label={field.title}
+                    >
+                      <Icon className="size-4 sm:size-5" />
+                      <span className="mt-1 px-1 text-[10px] font-semibold leading-tight sm:text-xs">
+                        {field.shortLabel}
+                      </span>
+                    </motion.button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </div>
