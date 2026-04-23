@@ -263,9 +263,10 @@ export default function Skills({ lang }: SkillsProps) {
                   {orbitConfig.map(({ field, x, y, nodeSize, delay }) => {
                     const center = orbitFrameSize / 2;
                     const distance = Math.sqrt(x * x + y * y) || 1;
-                    const endOffset = distance - nodeSize / 2 - (isMobile ? 10 : isTablet ? 12 : 11);
+                    const endOffset = distance - nodeSize / 2;
                     const endX = center + (x / distance) * endOffset;
                     const endY = center + (y / distance) * endOffset;
+                    const isSelected = selectedField.key === field.key;
 
                     return (
                       <motion.line
@@ -274,8 +275,18 @@ export default function Skills({ lang }: SkillsProps) {
                         y1={center}
                         x2={endX}
                         y2={endY}
-                        stroke={selectedField.key === field.key ? "rgba(37, 99, 235, 0.72)" : "rgba(37, 99, 235, 0.3)"}
-                        strokeWidth={selectedField.key === field.key ? (isMobile ? 2 : 2.4) : 1.2}
+                        stroke={
+                          isSelected
+                            ? "rgba(37, 99, 235, 0.82)"
+                            : "rgba(37, 99, 235, 0.3)"
+                        }
+                        strokeWidth={
+                          isSelected
+                            ? isMobile
+                              ? 3
+                              : 3.6
+                            : 1.35
+                        }
                         strokeLinecap="round"
                         initial={{ pathLength: 0, opacity: 0 }}
                         animate={isInView ? { pathLength: 1, opacity: 1 } : {}}
