@@ -88,6 +88,7 @@ export default function Skills({ lang }: SkillsProps) {
   const isVi = lang === "vi";
   const isMobile = useIsMobile(768);
   const isTablet = useIsMobile(1024);
+  const useCompactSelector = isTablet;
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.25 });
 
@@ -187,15 +188,15 @@ export default function Skills({ lang }: SkillsProps) {
   );
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-12 md:px-12">
-        <h1 className="text-5xl font-bold">
+    <section ref={sectionRef} className="relative overflow-visible">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 md:px-12">
+        <h1 className="text-4xl font-bold sm:text-5xl">
           {isVi ? "Kỹ năng & Chuyên môn" : "Skills & Expertise"}
         </h1>
         <Separator className="data-horizontal:h-1 w-1/12! rounded-full bg-primary" />
 
-        <div className="mt-4 inline-flex items-center justify-center lg:w-full">
-          <div className="space-y-6 rounded-3xl border border-border/70 bg-card/70 p-5 shadow-sm backdrop-blur-sm sm:p-7 lg:w-1/3">
+        <div className="mt-4 mb-16 flex w-full flex-col gap-10 lg:flex-row lg:items-center lg:gap-12">
+          <div className="w-full space-y-6 rounded-3xl border border-border/70 bg-card/70 p-5 shadow-sm backdrop-blur-sm sm:p-7 lg:max-w-[32rem] lg:flex-1">
             <div className="space-y-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
               <p>
                 I&apos;m always learning and exploring new technologies. If
@@ -231,81 +232,111 @@ export default function Skills({ lang }: SkillsProps) {
             </div>
           </div>
 
-          <div className="lg:w-2/3">
-            <div className="mx-auto flex h-82.5 w-full max-w-95 items-center justify-center sm:h-95 sm:max-w-105 md:h-100 md:max-w-110 lg:h-130 lg:max-w-140">
-              <div className="relative h-80 w-80 sm:h-90 sm:w-90 md:h-95 md:w-95 lg:h-125 lg:w-125">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.88 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ duration: 0.55, ease: "easeOut" }}
-                  className="absolute top-1/2 left-1/2 z-20 h-34 w-34 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border border-sky-500 bg-background shadow-lg sm:h-40 sm:w-40 lg:h-52 lg:w-52"
-                >
-                  <Image
-                    src="/body.png"
-                    alt="Profile"
-                    fill
-                    sizes="(max-width: 640px) 136px, (max-width: 1024px) 160px, 208px"
-                    className="object-cover"
-                    priority={false}
-                  />
-                </motion.div>
+          <div className="flex w-full items-center justify-center lg:flex-1">
+            {useCompactSelector ? (
+              <div className="w-full rounded-3xl border border-border/70 bg-card/60 p-4 shadow-sm backdrop-blur-sm">
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  {skillFields.map((field) => {
+                    const Icon = field.icon;
+                    const isSelected = selectedField.key === field.key;
 
-                <motion.div
-                  aria-hidden="true"
-                  initial={{ opacity: 0, scale: 0.92 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ duration: 0.6, delay: 0.15 }}
-                  style={{
-                    width: `${ringDiameter}px`,
-                    height: `${ringDiameter}px`,
-                  }}
-                  className="pointer-events-none absolute top-1/2 left-1/2 z-0 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20"
-                />
-
-                {orbitConfig.map(({ field, x, y, nodeSize, delay }) => {
-                  const Icon = field.icon;
-                  const isSelected = selectedField.key === field.key;
-
-                  return (
-                    <motion.button
-                      key={field.key}
-                      type="button"
-                      onClick={() => setSelectedFieldKey(field.key)}
-                      initial={{ opacity: 0, scale: 0.3 }}
-                      animate={
-                        isInView
-                          ? {
-                              opacity: 1,
-                              scale: 1,
-                              x,
-                              y,
-                            }
-                          : {}
-                      }
-                      transition={{
-                        duration: 0.5,
-                        delay,
-                        ease: "easeOut",
-                      }}
-                      style={{
-                        width: `${nodeSize}px`,
-                        height: `${nodeSize}px`,
-                        minWidth: `${nodeSize}px`,
-                        minHeight: `${nodeSize}px`,
-                      }}
-                      className={`absolute top-1/2 left-1/2 z-30 flex aspect-square shrink-0 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border p-0 text-center transition-all duration-300 ${
-                        isSelected
-                          ? "border-primary bg-primary text-primary-foreground shadow-lg"
-                          : "border-border bg-white text-foreground shadow-sm hover:border-primary/60"
-                      }`}
-                      aria-label={field.title}
-                    >
-                      <Icon className="size-4 sm:size-5" />
-                    </motion.button>
-                  );
-                })}
+                    return (
+                      <button
+                        key={field.key}
+                        type="button"
+                        onClick={() => setSelectedFieldKey(field.key)}
+                        className={`flex min-h-16 flex-col items-center justify-center gap-2 rounded-2xl border px-3 py-3 text-center transition-all duration-300 sm:min-h-18 ${
+                          isSelected
+                            ? "border-primary bg-primary text-primary-foreground shadow-md"
+                            : "border-border bg-background text-foreground shadow-sm"
+                        }`}
+                        aria-label={field.title}
+                      >
+                        <Icon className="size-4 sm:size-5" />
+                        <span className="text-xs font-medium leading-tight sm:text-sm">
+                          {field.shortLabel}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="flex min-h-[560px] w-full items-center justify-center lg:min-h-[620px]">
+                <div className="relative h-[500px] w-[500px] lg:h-[560px] lg:w-[560px]">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.88 }}
+                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                    transition={{ duration: 0.55, ease: "easeOut" }}
+                    className="absolute top-1/2 left-1/2 z-20 h-40 w-40 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border border-sky-500 bg-background shadow-lg lg:h-52 lg:w-52"
+                  >
+                    <Image
+                      src="/body.png"
+                      alt="Profile"
+                      fill
+                      sizes="(max-width: 1024px) 160px, 208px"
+                      className="object-cover"
+                      priority={false}
+                    />
+                  </motion.div>
+
+                  <motion.div
+                    aria-hidden="true"
+                    initial={{ opacity: 0, scale: 0.92 }}
+                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                    transition={{ duration: 0.6, delay: 0.15 }}
+                    style={{
+                      width: `${ringDiameter}px`,
+                      height: `${ringDiameter}px`,
+                    }}
+                    className="pointer-events-none absolute top-1/2 left-1/2 z-0 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20"
+                  />
+
+                  {orbitConfig.map(({ field, x, y, nodeSize, delay }) => {
+                    const Icon = field.icon;
+                    const isSelected = selectedField.key === field.key;
+
+                    return (
+                      <motion.button
+                        key={field.key}
+                        type="button"
+                        onClick={() => setSelectedFieldKey(field.key)}
+                        initial={{ opacity: 0, scale: 0.3 }}
+                        animate={
+                          isInView
+                            ? {
+                                opacity: 1,
+                                scale: 1,
+                                x,
+                                y,
+                              }
+                            : {}
+                        }
+                        transition={{
+                          duration: 0.5,
+                          delay,
+                          ease: "easeOut",
+                        }}
+                        style={{
+                          width: `${nodeSize}px`,
+                          height: `${nodeSize}px`,
+                          minWidth: `${nodeSize}px`,
+                          minHeight: `${nodeSize}px`,
+                        }}
+                        className={`absolute top-1/2 left-1/2 z-30 flex aspect-square shrink-0 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border p-0 text-center transition-all duration-300 ${
+                          isSelected
+                            ? "border-primary bg-primary text-primary-foreground shadow-lg"
+                            : "border-border bg-white text-foreground shadow-sm hover:border-primary/60"
+                        }`}
+                        aria-label={field.title}
+                      >
+                        <Icon className="size-5" />
+                      </motion.button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
