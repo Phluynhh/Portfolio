@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useMemo, useRef, useState } from "react";
-import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import {
   BrainCircuit,
@@ -169,7 +168,11 @@ export default function Skills({ lang }: SkillsProps) {
   const nodeSize = isMobile ? 64 : isTablet ? 84 : 68;
   const orbitFrameSize =
     ringDiameter + nodeSize + (isMobile ? 42 : isTablet ? 68 : 56);
-  const profileSize = isMobile ? 122 : isTablet ? 184 : 160;
+  const centerCoreSize = ringDiameter * (isMobile ? 0.32 : isTablet ? 0.34 : 0.33);
+  const ringStep = (ringDiameter - centerCoreSize) / 6;
+  const accentCircleSize = centerCoreSize;
+  const innerAuraSize = centerCoreSize + ringStep * 2;
+  const outerAuraSize = centerCoreSize + ringStep * 4;
 
   const orbitConfig = useMemo(
     () =>
@@ -251,24 +254,40 @@ export default function Skills({ lang }: SkillsProps) {
                 }}
               >
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.88 }}
+                  aria-hidden="true"
+                  initial={{ opacity: 0, scale: 0.8 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ duration: 0.55, ease: "easeOut" }}
+                  transition={{ duration: 0.45, delay: 0.1, ease: "easeOut" }}
                   style={{
-                    width: `${profileSize}px`,
-                    height: `${profileSize}px`,
+                    width: `${accentCircleSize}px`,
+                    height: `${accentCircleSize}px`,
                   }}
-                  className="absolute top-1/2 left-1/2 z-20 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border border-sky-500 bg-background shadow-lg"
-                >
-                  <Image
-                    src="/body.png"
-                    alt="Profile"
-                    fill
-                    sizes="(max-width: 768px) 88px, (max-width: 1024px) 112px, 160px"
-                    className="object-cover"
-                    priority={false}
-                  />
-                </motion.div>
+                  className="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-400/16 bg-blue-500/8"
+                />
+
+                <motion.div
+                  aria-hidden="true"
+                  initial={{ opacity: 0, scale: 0.82 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ duration: 0.45, delay: 0.16, ease: "easeOut" }}
+                  style={{
+                    width: `${innerAuraSize}px`,
+                    height: `${innerAuraSize}px`,
+                  }}
+                  className="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-400/22"
+                />
+
+                <motion.div
+                  aria-hidden="true"
+                  initial={{ opacity: 0, scale: 0.84 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ duration: 0.5, delay: 0.28, ease: "easeOut" }}
+                  style={{
+                    width: `${outerAuraSize}px`,
+                    height: `${outerAuraSize}px`,
+                  }}
+                  className="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-300/16"
+                />
 
                 <motion.div
                   aria-hidden="true"
@@ -285,43 +304,64 @@ export default function Skills({ lang }: SkillsProps) {
                 {orbitConfig.map(({ field, x, y, nodeSize, delay }) => {
                   const Icon = field.icon;
                   const isSelected = selectedField.key === field.key;
+                  const distance = Math.sqrt(x * x + y * y);
+                  const connectorLength = Math.max(distance - nodeSize / 2, 0);
+                  const angle = (Math.atan2(y, x) * 180) / Math.PI;
 
                   return (
-                    <motion.button
-                      key={field.key}
-                      type="button"
-                      onClick={() => setSelectedFieldKey(field.key)}
-                      initial={{ opacity: 0, scale: 0.3 }}
-                      animate={
-                        isInView
-                          ? {
-                              opacity: 1,
-                              scale: 1,
-                              x,
-                              y,
-                            }
-                          : {}
-                      }
-                      transition={{
-                        duration: 0.5,
-                        delay,
-                        ease: "easeOut",
-                      }}
-                      style={{
-                        width: `${nodeSize}px`,
-                        height: `${nodeSize}px`,
-                        minWidth: `${nodeSize}px`,
-                        minHeight: `${nodeSize}px`,
-                      }}
-                      className={`absolute top-1/2 left-1/2 z-30 flex aspect-square shrink-0 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border p-0 text-center transition-all duration-300 ${
-                        isSelected
-                          ? "border-primary bg-primary text-primary-foreground shadow-lg"
-                          : "border-border bg-white text-foreground shadow-sm hover:border-primary/60"
-                      }`}
-                      aria-label={field.title}
-                    >
-                      <Icon className={isMobile ? "size-4" : "size-5"} />
-                    </motion.button>
+                    <React.Fragment key={field.key}>
+                      <motion.div
+                        aria-hidden="true"
+                        initial={{ opacity: 0, scaleX: 0 }}
+                        animate={isInView ? { opacity: 1, scaleX: 1 } : {}}
+                        transition={{
+                          duration: 0.45,
+                          delay: Math.max(delay - 0.08, 0),
+                          ease: "easeOut",
+                        }}
+                        style={{
+                          width: `${connectorLength}px`,
+                          transform: `translateY(-50%) rotate(${angle}deg)`,
+                          transformOrigin: "left center",
+                        }}
+                        className="absolute top-1/2 left-1/2 z-10 h-px -translate-y-1/2 bg-gradient-to-r from-blue-500/45 to-blue-200/20"
+                      />
+
+                      <motion.button
+                        type="button"
+                        onClick={() => setSelectedFieldKey(field.key)}
+                        initial={{ opacity: 0, scale: 0.3 }}
+                        animate={
+                          isInView
+                            ? {
+                                opacity: 1,
+                                scale: 1,
+                                x,
+                                y,
+                              }
+                            : {}
+                        }
+                        transition={{
+                          duration: 0.5,
+                          delay,
+                          ease: "easeOut",
+                        }}
+                        style={{
+                          width: `${nodeSize}px`,
+                          height: `${nodeSize}px`,
+                          minWidth: `${nodeSize}px`,
+                          minHeight: `${nodeSize}px`,
+                        }}
+                        className={`absolute top-1/2 left-1/2 z-30 flex aspect-square shrink-0 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border p-0 text-center transition-all duration-300 ${
+                          isSelected
+                            ? "border-primary bg-primary text-primary-foreground shadow-lg"
+                            : "border-border bg-white text-foreground shadow-sm hover:border-primary/60"
+                        }`}
+                        aria-label={field.title}
+                      >
+                        <Icon className={isMobile ? "size-4" : "size-5"} />
+                      </motion.button>
+                    </React.Fragment>
                   );
                 })}
               </div>
