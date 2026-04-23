@@ -309,8 +309,12 @@ export default function Skills({ lang }: SkillsProps) {
                     width: `${accentCircleSize}px`,
                     height: `${accentCircleSize}px`,
                   }}
-                  className="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-400/16 bg-blue-500/8"
-                />
+                  className="absolute top-1/2 left-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-blue-400/16 bg-white shadow-sm"
+                >
+                  <span className="text-[10px] font-semibold tracking-[0.28em] text-primary sm:text-xs">
+                    SKILLS
+                  </span>
+                </motion.div>
 
                 <motion.div
                   aria-hidden="true"
