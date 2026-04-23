@@ -253,6 +253,42 @@ export default function Skills({ lang }: SkillsProps) {
                   height: `${orbitFrameSize}px`,
                 }}
               >
+                <svg
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 z-5"
+                  width={orbitFrameSize}
+                  height={orbitFrameSize}
+                  viewBox={`0 0 ${orbitFrameSize} ${orbitFrameSize}`}
+                >
+                  {orbitConfig.map(({ field, x, y, nodeSize, delay }) => {
+                    const center = orbitFrameSize / 2;
+                    const distance = Math.sqrt(x * x + y * y) || 1;
+                    const endOffset = distance - nodeSize / 2 - (isMobile ? 10 : isTablet ? 12 : 11);
+                    const endX = center + (x / distance) * endOffset;
+                    const endY = center + (y / distance) * endOffset;
+
+                    return (
+                      <motion.line
+                        key={`connector-${field.key}`}
+                        x1={center}
+                        y1={center}
+                        x2={endX}
+                        y2={endY}
+                        stroke={selectedField.key === field.key ? "rgba(37, 99, 235, 0.72)" : "rgba(37, 99, 235, 0.3)"}
+                        strokeWidth={selectedField.key === field.key ? (isMobile ? 2 : 2.4) : 1.2}
+                        strokeLinecap="round"
+                        initial={{ pathLength: 0, opacity: 0 }}
+                        animate={isInView ? { pathLength: 1, opacity: 1 } : {}}
+                        transition={{
+                          duration: 0.45,
+                          delay: Math.max(delay - 0.08, 0),
+                          ease: "easeOut",
+                        }}
+                      />
+                    );
+                  })}
+                </svg>
+
                 <motion.div
                   aria-hidden="true"
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -304,29 +340,9 @@ export default function Skills({ lang }: SkillsProps) {
                 {orbitConfig.map(({ field, x, y, nodeSize, delay }) => {
                   const Icon = field.icon;
                   const isSelected = selectedField.key === field.key;
-                  const distance = Math.sqrt(x * x + y * y);
-                  const connectorLength = Math.max(distance - nodeSize / 2, 0);
-                  const angle = (Math.atan2(y, x) * 180) / Math.PI;
 
                   return (
                     <React.Fragment key={field.key}>
-                      <motion.div
-                        aria-hidden="true"
-                        initial={{ opacity: 0, scaleX: 0 }}
-                        animate={isInView ? { opacity: 1, scaleX: 1 } : {}}
-                        transition={{
-                          duration: 0.45,
-                          delay: Math.max(delay - 0.08, 0),
-                          ease: "easeOut",
-                        }}
-                        style={{
-                          width: `${connectorLength}px`,
-                          transform: `translateY(-50%) rotate(${angle}deg)`,
-                          transformOrigin: "left center",
-                        }}
-                        className="absolute top-1/2 left-1/2 z-10 h-px -translate-y-1/2 bg-gradient-to-r from-blue-500/45 to-blue-200/20"
-                      />
-
                       <motion.button
                         type="button"
                         onClick={() => setSelectedFieldKey(field.key)}
