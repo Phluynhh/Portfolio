@@ -1,6 +1,8 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import ProjectDetailHeader from "@/components/ui/ProjectDetailHeader";
 import type { Language } from "@/lib/i18n";
+import { cn } from "@/lib/utils";
 import {
   ArrowLeft,
   CheckCircle2,
@@ -23,9 +25,73 @@ type ProjectImage = {
   caption: Record<Language, string>;
 };
 
+type InfoBlockTone = "sky" | "violet" | "emerald";
+
+const INFO_BLOCK_STYLES: Record<
+  InfoBlockTone,
+  {
+    section: string;
+    icon: string;
+    title: string;
+    highlight: string;
+  }
+> = {
+  sky: {
+    section: "border-primary/35",
+    icon: "text-primary",
+    title: "text-primary",
+    highlight: "text-primary",
+  },
+  violet: {
+    section: "border-purple-300",
+    icon: "text-purple-600",
+    title: "text-purple-600",
+    highlight: "text-purple-600",
+  },
+  emerald: {
+    section: "border-teal-300",
+    icon: "text-teal-600",
+    title: "text-teal-600",
+    highlight: "text-teal-600",
+  },
+};
+
+const HIGHLIGHT_TERMS = [
+  "React Native screens",
+  "reusable UI pieces",
+  "backend APIs",
+  "profile, schedule, and session data",
+  "navigation structure",
+  "core tasks",
+  "responsive",
+  "mobile screen sizes",
+  "Expert dashboard",
+  "upcoming work",
+  "key session information",
+  "Schedule views",
+  "appointment status",
+  "Session detail flow",
+  "client context",
+  "action-focused layout",
+  "Consistent mobile UI system",
+  "TypeScript",
+  "Expo",
+  "focused mobile experience",
+  "expert-side operations",
+  "Reduced friction",
+  "schedule and session workflows",
+  "code structure",
+  "future SoulSpace features",
+  "React Native",
+  "API",
+  "Dashboard",
+  "mobile",
+  "SoulSpace",
+];
+
 const PROJECT = {
   title: "SoulSpace FE Expert",
-  categoryLabel: "FE",
+  categoryLabel: "October 2025 - December 2025",
   githubUrl:
     "https://github.com/Chuyen-d-Mobile-va-Pervasive-Computing/SoulSpace-FE-Expert",
   tags: ["React Native", "TypeScript", "Expo", "Mobile UI"],
@@ -184,16 +250,17 @@ export default async function SoulSpaceExpertPage({
 
   return (
     <main className="min-h-dvh bg-background text-foreground">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 py-8 md:px-10 lg:px-12">
+      <ProjectDetailHeader initialLang={lang} />
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 py-8 pt-28 md:px-10 lg:px-12">
         <header className="flex items-center justify-between gap-4">
           <Button asChild variant="ghost" className="h-10 px-3">
             <Link href={`/?lang=${lang}#projects`}>
               <ArrowLeft size={18} />
-              {content.back}
+              <span className="text-sm">{content.back}</span>
             </Link>
           </Button>
 
-          <Badge className="rounded-md bg-primary px-3 py-1 text-primary-foreground">
+          <Badge className="rounded-md bg-primary px-3 py-3 text-sm text-primary-foreground">
             {PROJECT.categoryLabel}
           </Badge>
         </header>
@@ -252,9 +319,18 @@ export default async function SoulSpaceExpertPage({
           <InfoBlock
             title={content.responsibilitiesTitle}
             items={content.responsibilities}
+            tone="sky"
           />
-          <InfoBlock title={content.featuresTitle} items={content.features} />
-          <InfoBlock title={content.outcomesTitle} items={content.outcomes} />
+          <InfoBlock
+            title={content.featuresTitle}
+            items={content.features}
+            tone="violet"
+          />
+          <InfoBlock
+            title={content.outcomesTitle}
+            items={content.outcomes}
+            tone="emerald"
+          />
         </section>
 
         <section className="space-y-5">
@@ -294,20 +370,76 @@ function SummaryTile({
   );
 }
 
-function InfoBlock({ title, items }: { title: string; items: string[] }) {
+function InfoBlock({
+  title,
+  items,
+  tone,
+}: {
+  title: string;
+  items: string[];
+  tone: InfoBlockTone;
+}) {
+  const styles = INFO_BLOCK_STYLES[tone];
+
   return (
-    <section className="rounded-xl border border-border bg-card p-5">
-      <h2 className="mb-4 text-lg font-bold">{title}</h2>
+    <section className={cn("rounded-xl border-2 bg-card p-5", styles.section)}>
+      <h2 className={cn("mb-4 text-lg font-bold", styles.title)}>{title}</h2>
       <ul className="space-y-3">
         {items.map((item) => (
           <li key={item} className="flex gap-3 text-sm leading-6">
-            <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" />
-            <span className="text-foreground/75">{item}</span>
+            <CheckCircle2
+              className={cn("mt-0.5 size-4 shrink-0", styles.icon)}
+            />
+            <span className="text-foreground/75">
+              <HighlightedText
+                text={item}
+                highlightClassName={styles.highlight}
+              />
+            </span>
           </li>
         ))}
       </ul>
     </section>
   );
+}
+
+function HighlightedText({
+  text,
+  highlightClassName,
+}: {
+  text: string;
+  highlightClassName: string;
+}) {
+  const terms = [...HIGHLIGHT_TERMS].sort((a, b) => b.length - a.length);
+  const chunks: ReactNode[] = [];
+  let cursor = 0;
+
+  while (cursor < text.length) {
+    const match = terms.find((term) =>
+      text
+        .slice(cursor)
+        .toLocaleLowerCase()
+        .startsWith(term.toLocaleLowerCase()),
+    );
+
+    if (!match) {
+      chunks.push(text[cursor]);
+      cursor += 1;
+      continue;
+    }
+
+    chunks.push(
+      <mark
+        key={`${match}-${cursor}`}
+        className={cn("bg-transparent font-bold", highlightClassName)}
+      >
+        {text.slice(cursor, cursor + match.length)}
+      </mark>,
+    );
+    cursor += match.length;
+  }
+
+  return chunks;
 }
 
 function ProjectFigure({

@@ -45,9 +45,16 @@ function getInitialTheme(): boolean {
 interface HeaderProps {
   lang: Language;
   onLanguageChange: (value: Language) => void;
+  homeHref?: string;
+  navHrefPrefix?: string;
 }
 
-export default function Header({ lang, onLanguageChange }: HeaderProps) {
+export default function Header({
+  lang,
+  onLanguageChange,
+  homeHref = "#overall",
+  navHrefPrefix = "",
+}: HeaderProps) {
   const [isDark, setIsDark] = useState(getInitialTheme);
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -89,6 +96,11 @@ export default function Header({ lang, onLanguageChange }: HeaderProps) {
   }
 
   function scrollToSection(event: MouseEvent<HTMLAnchorElement>, href: string) {
+    if (!href.startsWith("#")) {
+      setIsMobileMenuOpen(false);
+      return;
+    }
+
     const id = href.replace("#", "");
     const target = document.getElementById(id);
 
@@ -121,13 +133,17 @@ export default function Header({ lang, onLanguageChange }: HeaderProps) {
   const selectedLanguage =
     LANGUAGES.find((language) => language.value === lang) ?? LANGUAGES[0];
   const navLinks = NAV_LINKS[lang];
+  const navLinksWithHref = navLinks.map((link) => ({
+    ...link,
+    href: `${navHrefPrefix}${link.href}`,
+  }));
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 h-20 border-b border-border bg-background/50 backdrop-blur-md lg:px-8">
       <div className="relative mx-auto flex h-full w-full max-w-6xl items-center justify-between px-4 md:px-6">
         <a
-          href="#overall"
-          onClick={(event) => scrollToSection(event, "#overall")}
+          href={homeHref}
+          onClick={(event) => scrollToSection(event, homeHref)}
           className="select-none text-2xl font-bold tracking-tight text-primary"
         >
           Portfolio
@@ -135,7 +151,7 @@ export default function Header({ lang, onLanguageChange }: HeaderProps) {
 
         <nav className="absolute left-1/2 hidden -translate-x-1/2 lg:block">
           <ul className="flex items-center gap-7">
-            {navLinks.map((link) => (
+            {navLinksWithHref.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
@@ -254,7 +270,7 @@ export default function Header({ lang, onLanguageChange }: HeaderProps) {
 
             <nav className="mt-6">
               <ul className="flex flex-col gap-2">
-                {navLinks.map((link) => (
+                {navLinksWithHref.map((link) => (
                   <li key={link.href}>
                     <a
                       href={link.href}
