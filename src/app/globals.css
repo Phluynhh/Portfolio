@@ -213,6 +213,68 @@
   }
 }
 
+@layer components {
+  .skill-card {
+    @apply rounded-xl border border-border bg-card p-5 transition-all duration-300;
+  }
+
+  .skill-card:hover {
+    border-color: var(--skill-accent, var(--primary));
+    transform: scale(1.03);
+  }
+
+  .skill-card-heading-icon {
+    @apply rounded-lg p-2 transition-colors duration-300;
+    color: var(--skill-accent, var(--primary));
+    background-color: color-mix(
+      in oklch,
+      var(--skill-accent, var(--primary)) 16%,
+      transparent
+    );
+  }
+
+  .skill-item {
+    @apply flex min-w-0 cursor-pointer flex-col items-center;
+  }
+
+  .skill-icon {
+    @apply flex h-18 w-18 items-center justify-center rounded-2xl border-2 bg-background/80 p-4 transition-all duration-300;
+    border-color: color-mix(
+      in oklch,
+      var(--skill-accent, var(--primary)) 55%,
+      transparent
+    );
+    box-shadow: 0 0 10px
+      color-mix(in oklch, var(--skill-accent, var(--primary)) 10%, transparent);
+  }
+
+  .skill-label {
+    @apply mt-2 w-full truncate text-center text-xs font-medium text-foreground transition-all duration-300;
+  }
+
+  .skill-initials {
+    @apply text-center text-sm font-bold leading-tight;
+    color: var(--skill-accent, var(--primary));
+  }
+
+  .skill-item:hover .skill-icon {
+    border-color: var(--skill-accent, var(--primary));
+    background-color: color-mix(
+      in oklch,
+      var(--skill-accent, var(--primary)) 7%,
+      transparent
+    );
+    box-shadow: 0 0 16px
+      color-mix(in oklch, var(--skill-accent, var(--primary)) 20%, transparent);
+    transform: translateY(-3px) scale(1.02);
+  }
+
+  .skill-item:hover .skill-label {
+    color: var(--skill-accent, var(--primary));
+    font-weight: 800;
+  }
+}
+
 @keyframes orb-breathe {
   0%,
   100% {

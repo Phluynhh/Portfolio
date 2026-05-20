@@ -49,20 +49,20 @@ const databaseSkills = [
 ];
 
 const fullstackSkills = [
-  "REST API Integration",
-  "Authentication (JWT/OAuth)",
-  "CRUD Application",
-  "State Management",
-  "Role-Based Access Control",
+  "Next.js",
+  "Node.js",
+  "Prisma",
+  "PostgreSQL",
+  "Docker",
 ];
 
 const aiLlmSkills = [
-  "Image Retrieval",
-  "RAG Chatbot",
-  "OpenAI API",
-  "Vector Search",
-  "LLM Integration",
-  "Semantic Search",
+  "PyTorch",
+  "TensorFlow",
+  "NumPy",
+  "Pandas",
+  "OpenCV",
+  "Scikit-learn",
 ];
 
 const toolSkills = [
@@ -120,33 +120,39 @@ export default function Skills({ lang }: SkillsProps) {
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
           <SkillCard
             title="Frontend"
-            icon={<Code className="text-primary" />}
+            icon={<Code />}
             skills={frontendSkills}
+            accent="var(--chart-1)"
           />
           <SkillCard
             title="Backend"
-            icon={<Server className="text-primary" />}
+            icon={<Server />}
             skills={backendSkills}
+            accent="var(--chart-2)"
           />
           <SkillCard
             title={isVi ? "Cơ sở dữ liệu" : "Databases"}
-            icon={<Database className="text-primary" />}
+            icon={<Database />}
             skills={databaseSkills}
+            accent="var(--chart-3)"
           />
           <SkillCard
             title="Fullstack"
-            icon={<Layers className="text-primary" />}
+            icon={<Layers />}
             skills={fullstackSkills}
+            accent="var(--chart-4)"
           />
           <SkillCard
             title="AI & LLM"
-            icon={<BrainCircuit className="text-primary" />}
+            icon={<BrainCircuit />}
             skills={aiLlmSkills}
+            accent="var(--chart-5)"
           />
           <SkillCard
             title={isVi ? "Công cụ" : "Tools"}
-            icon={<Wrench className="text-primary" />}
+            icon={<Wrench />}
             skills={toolSkills}
+            accent="var(--destructive)"
           />
         </div>
 
