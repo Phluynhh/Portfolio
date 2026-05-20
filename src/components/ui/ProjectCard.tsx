@@ -1,20 +1,9 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import type { Language } from "@/lib/i18n";
+import type { ProjectItem } from "@/lib/projects";
 import { ExternalLink, Github, Monitor, Sparkles } from "lucide-react";
-import type { Language } from "../../lib/i18n";
-
-export type ProjectCategory = "FE" | "BE" | "AI";
-
-export interface ProjectItem {
-  title: string;
-  description: string;
-  role: string;
-  tags: string[];
-  highlight: string;
-  githubUrl: string;
-  liveUrl?: string;
-  categories: ProjectCategory[];
-}
+import Link from "next/link";
 
 interface ProjectCardProps {
   project: ProjectItem;
@@ -84,7 +73,24 @@ export default function ProjectCard({ project, lang }: ProjectCardProps) {
 
         <div className="border-border/70 border-t pt-5">
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            {project.liveUrl ? (
+            {project.detailHref ? (
+              <Button asChild className="h-12 w-full text-base font-semibold">
+                <Link
+                  href={{
+                    pathname: project.detailHref,
+                    query: { lang },
+                  }}
+                  aria-label={
+                    isVi
+                      ? `Xem chi tiết ${project.title}`
+                      : `View details of ${project.title}`
+                  }
+                >
+                  <ExternalLink size={18} />
+                  {isVi ? "Xem chi tiết" : "View Detail"}
+                </Link>
+              </Button>
+            ) : project.liveUrl ? (
               <Button asChild className="h-12 w-full text-base font-semibold">
                 <a
                   href={project.liveUrl}
@@ -103,7 +109,7 @@ export default function ProjectCard({ project, lang }: ProjectCardProps) {
             ) : (
               <Button disabled className="h-12 w-full text-base font-semibold">
                 <ExternalLink size={18} />
-                {isVi ? "Đang cập nhật..." : "Updating..."}
+                {isVi ? "Xem chi tiết" : "View Detail"}
               </Button>
             )}
 

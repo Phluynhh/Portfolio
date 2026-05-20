@@ -16,6 +16,8 @@ import type { Language } from "../lib/i18n";
 export default function Home() {
   const [lang, setLang] = useState<Language>(() => {
     if (typeof window === "undefined") return "en";
+    const queryLang = new URLSearchParams(window.location.search).get("lang");
+    if (queryLang === "en" || queryLang === "vi") return queryLang;
     const stored = localStorage.getItem("lang");
     return stored === "en" || stored === "vi" ? stored : "en";
   });
