@@ -7,6 +7,7 @@ export interface ProjectItem {
   role: string;
   tags: string[];
   highlight: string;
+  thumbnailSrc?: string;
   githubUrl: string;
   liveUrl?: string;
   detailHref?: string;

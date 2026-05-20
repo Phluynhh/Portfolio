@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import type { Language } from "@/lib/i18n";
 import type { ProjectItem } from "@/lib/projects";
 import { ExternalLink, Github, Monitor, Sparkles } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 interface ProjectCardProps {
@@ -16,27 +17,37 @@ export default function ProjectCard({ project, lang }: ProjectCardProps) {
 
   return (
     <article className="overflow-hidden rounded-2xl border border-primary/20 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-      <div className="relative flex h-56 items-center justify-center bg-linear-to-br from-blue-100 via-slate-100 to-blue-200/70 p-6">
+      <div className="relative flex h-56 items-center justify-center overflow-hidden bg-linear-to-br from-blue-100 via-slate-100 to-blue-200/70 p-6">
         <Badge
           variant="secondary"
-          className="absolute top-4 right-4 bg-primary text-primary-foreground"
+          className="absolute top-4 right-4 z-10 bg-primary text-primary-foreground"
         >
           {categoryLabel}
         </Badge>
 
-        <div className="w-full max-w-sm rounded-xl border-4 border-primary/90 bg-linear-to-br from-blue-50 to-blue-100 p-5 shadow-sm">
-          <div className="mb-4 flex gap-2">
-            <span className="h-2.5 w-2.5 rounded-full bg-primary/30" />
-            <span className="h-2.5 w-2.5 rounded-full bg-primary/30" />
-            <span className="h-2.5 w-2.5 rounded-full bg-primary/30" />
+        {project.thumbnailSrc ? (
+          <Image
+            src={project.thumbnailSrc}
+            alt={`${project.title} thumbnail`}
+            fill
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="object-cover"
+          />
+        ) : (
+          <div className="w-full max-w-sm rounded-xl border-4 border-primary/90 bg-linear-to-br from-blue-50 to-blue-100 p-5 shadow-sm">
+            <div className="mb-4 flex gap-2">
+              <span className="h-2.5 w-2.5 rounded-full bg-primary/30" />
+              <span className="h-2.5 w-2.5 rounded-full bg-primary/30" />
+              <span className="h-2.5 w-2.5 rounded-full bg-primary/30" />
+            </div>
+            <div className="h-5 w-32 rounded-md bg-primary/20" />
+            <div className="mt-4 h-3.5 w-full rounded-md bg-primary/18" />
+            <div className="mt-3 h-3.5 w-4/5 rounded-md bg-primary/18" />
+            <div className="mt-4 flex justify-center">
+              <Monitor className="text-primary/70" size={18} />
+            </div>
           </div>
-          <div className="h-5 w-32 rounded-md bg-primary/20" />
-          <div className="mt-4 h-3.5 w-full rounded-md bg-primary/18" />
-          <div className="mt-3 h-3.5 w-4/5 rounded-md bg-primary/18" />
-          <div className="mt-4 flex justify-center">
-            <Monitor className="text-primary/70" size={18} />
-          </div>
-        </div>
+        )}
       </div>
 
       <div className="space-y-5 p-6">

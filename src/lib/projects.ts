@@ -42,6 +42,19 @@ const PROJECTS_VI: ProjectItem[] = [
   studentManagementSystemBeVi,
 ];
 
+const PROJECT_THUMBNAILS: Record<string, string> = {
+  "soulspace-fe-expert": "/thumbnail_expert.jpg",
+  "soulspace-fe-admin": "/thumbnail_admin.jpg",
+  "soulspace-backend": "/thumbnail_patient.jpg",
+  "se400-seminar-cnpm": "/thumbnail_detect.jpg",
+  "student-management-system-be": "/thumbnail_student.png",
+};
+
 export function getProjects(lang: Language) {
-  return lang === "vi" ? PROJECTS_VI : PROJECTS_EN;
+  const projects = lang === "vi" ? PROJECTS_VI : PROJECTS_EN;
+
+  return projects.map((project) => ({
+    ...project,
+    thumbnailSrc: project.thumbnailSrc ?? PROJECT_THUMBNAILS[project.slug],
+  }));
 }
