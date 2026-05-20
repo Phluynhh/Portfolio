@@ -10,6 +10,7 @@ export const soulSpaceFeAdminEn: ProjectItem = {
   highlight: "Implemented clear admin experiences for complex data",
   githubUrl:
     "https://github.com/Chuyen-d-Mobile-va-Pervasive-Computing/SoulSpace-FE-Admin",
+  detailHref: "/projects/soulspace-fe-admin",
   categories: ["FE"],
 };
 
@@ -23,5 +24,6 @@ export const soulSpaceFeAdminVi: ProjectItem = {
   highlight: "Thiết kế trải nghiệm admin rõ ràng cho dữ liệu phức tạp",
   githubUrl:
     "https://github.com/Chuyen-d-Mobile-va-Pervasive-Computing/SoulSpace-FE-Admin",
+  detailHref: "/projects/soulspace-fe-admin",
   categories: ["FE"],
 };
