@@ -168,7 +168,8 @@ export default function Skills({ lang }: SkillsProps) {
   const nodeSize = isMobile ? 64 : isTablet ? 84 : 68;
   const orbitFrameSize =
     ringDiameter + nodeSize + (isMobile ? 42 : isTablet ? 68 : 56);
-  const centerCoreSize = ringDiameter * (isMobile ? 0.32 : isTablet ? 0.34 : 0.33);
+  const centerCoreSize =
+    ringDiameter * (isMobile ? 0.32 : isTablet ? 0.34 : 0.33);
   const ringStep = (ringDiameter - centerCoreSize) / 6;
   const accentCircleSize = centerCoreSize;
   const innerAuraSize = centerCoreSize + ringStep * 2;
@@ -200,39 +201,40 @@ export default function Skills({ lang }: SkillsProps) {
         </h1>
         <Separator className="data-horizontal:h-1 w-1/12! rounded-full bg-primary" />
 
-        <div className="mt-4 mb-16 flex w-full flex-col gap-10 lg:flex-row lg:items-center lg:gap-12">
-          <div className="w-full space-y-6 rounded-3xl border border-border/70 bg-card/70 p-5 shadow-sm backdrop-blur-sm sm:p-7 lg:max-w-[32rem] lg:flex-1">
-            <div className="space-y-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
+        <div className="mb-16 flex w-full flex-col gap-10 lg:flex-row lg:items-center lg:gap-12">
+          <div className="flex-row h-full">
+            <div className="space-y-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
               <p>
                 I&apos;m always learning and exploring new technologies. If
                 there&apos;s a specific tech stack you&apos;re looking for,
                 there&apos;s a good chance I can pick it up quickly.
               </p>
-              <p>
+              <p className="mb-4">
                 My approach is to master the fundamentals deeply while staying
                 current with industry trends.
               </p>
             </div>
+            <div className="w-full space-y-6 rounded-3xl border border-border/70 bg-card/70 p-5 shadow-sm backdrop-blur-sm sm:p-7 lg:max-w-[32rem] lg:flex-1">
+              <div className="space-y-3 border-border/70">
+                <div>
+                  <p className="text-lg font-semibold text-foreground sm:text-xl">
+                    {selectedField.title}
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground sm:text-base">
+                    {selectedField.description}
+                  </p>
+                </div>
 
-            <div className="space-y-3 border-t border-border/70 pt-5">
-              <div>
-                <p className="text-sm font-semibold text-foreground sm:text-base">
-                  {selectedField.title}
-                </p>
-                <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
-                  {selectedField.description}
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                {selectedField.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary sm:text-sm"
-                  >
-                    {skill}
-                  </span>
-                ))}
+                <div className="flex flex-wrap gap-2">
+                  {selectedField.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-sm font-medium text-primary sm:text-base"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -280,13 +282,7 @@ export default function Skills({ lang }: SkillsProps) {
                             ? "rgba(37, 99, 235, 0.82)"
                             : "rgba(37, 99, 235, 0.3)"
                         }
-                        strokeWidth={
-                          isSelected
-                            ? isMobile
-                              ? 3
-                              : 3.6
-                            : 1.35
-                        }
+                        strokeWidth={isSelected ? (isMobile ? 3 : 3.6) : 1.35}
                         strokeLinecap="round"
                         initial={{ pathLength: 0, opacity: 0 }}
                         animate={isInView ? { pathLength: 1, opacity: 1 } : {}}
