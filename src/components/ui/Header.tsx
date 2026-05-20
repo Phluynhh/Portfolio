@@ -124,11 +124,7 @@ export default function Header({ lang, onLanguageChange }: HeaderProps) {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 h-20 border-b border-border bg-background/50 backdrop-blur-md lg:px-8">
-      <div
-        className={`mx-auto h-full w-full max-w-6xl items-center px-4 md:px-6 ${
-          isCompactHeader ? "flex justify-between" : "relative flex justify-between"
-        }`}
-      >
+      <div className="relative mx-auto flex h-full w-full max-w-6xl items-center justify-between px-4 md:px-6">
         <a
           href="#overall"
           onClick={(event) => scrollToSection(event, "#overall")}
@@ -137,25 +133,24 @@ export default function Header({ lang, onLanguageChange }: HeaderProps) {
           Portfolio
         </a>
 
-        {!isCompactHeader && (
-          <>
-            <nav className="absolute left-1/2 hidden -translate-x-1/2 lg:block">
-              <ul className="flex items-center gap-7">
-                {navLinks.map((link) => (
-                  <li key={link.href}>
-                    <a
-                      href={link.href}
-                      onClick={(event) => scrollToSection(event, link.href)}
-                      className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+        <nav className="absolute left-1/2 hidden -translate-x-1/2 lg:block">
+          <ul className="flex items-center gap-7">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  onClick={(event) => scrollToSection(event, link.href)}
+                  className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-            <div className="hidden items-center gap-3 lg:flex">
+        {!isCompactHeader && (
+        <div className="ml-auto flex items-center gap-3">
               <div ref={langRef} className="relative">
                 <button
                   type="button"
@@ -220,8 +215,7 @@ export default function Header({ lang, onLanguageChange }: HeaderProps) {
               >
                 {isDark ? <Sun className="size-4" /> : <Moon className="size-4" />}
               </button>
-            </div>
-          </>
+        </div>
         )}
 
         {isCompactHeader && (
@@ -229,7 +223,7 @@ export default function Header({ lang, onLanguageChange }: HeaderProps) {
             type="button"
             onClick={() => setIsMobileMenuOpen(true)}
             aria-label={lang === "vi" ? "Mở menu" : "Open menu"}
-            className="flex size-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            className="ml-2 flex size-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground lg:hidden"
           >
             <Menu className="size-5" />
           </button>
