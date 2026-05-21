@@ -4,11 +4,12 @@ export const se400SeminarCnpmEn: ProjectItem = {
   slug: "se400-seminar-cnpm",
   title: "SE400 Seminar CNPM",
   description:
-    "AI-oriented seminar project exploring practical machine learning applications and solution delivery.",
+    "AI seminar project for detecting community-standard violations with TF-IDF, CNN, BiLSTM, and RoBERTa.",
   role: "AI Engineer",
-  tags: ["Python", "Machine Learning", "Data", "Research"],
-  highlight: "Applied AI concepts to build practical outcomes",
+  tags: ["Python", "NLP", "RoBERTa", "Multi-label"],
+  highlight: "Compared classical ML, deep learning, and transformer pipelines",
   githubUrl: "https://github.com/FakerHecker/SE400_Seminar_CNPM",
+  detailHref: "/projects/se400-seminar-cnpm",
   categories: ["AI"],
 };
 
@@ -16,10 +17,11 @@ export const se400SeminarCnpmVi: ProjectItem = {
   slug: "se400-seminar-cnpm",
   title: "SE400 Seminar CNPM",
   description:
-    "Dự án seminar định hướng AI, khám phá ứng dụng machine learning trong thực tế.",
+    "Dự án seminar ứng dụng Machine Learning vào nhận diện văn bản vi phạm tiêu chuẩn cộng đồng.",
   role: "Kỹ sư AI",
-  tags: ["Python", "Machine Learning", "Data", "Research"],
-  highlight: "Áp dụng AI để tạo ra kết quả thực tiễn",
+  tags: ["Python", "NLP", "RoBERTa", "Multi-label"],
+  highlight: "So sánh pipeline classical ML, deep learning và transformer",
   githubUrl: "https://github.com/FakerHecker/SE400_Seminar_CNPM",
+  detailHref: "/projects/se400-seminar-cnpm",
   categories: ["AI"],
 };
