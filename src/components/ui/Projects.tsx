@@ -1,128 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import ProjectCard, { type ProjectItem } from "@/components/ui/ProjectCard";
+import { Button } from "@/components/ui/button";
+import ProjectCard from "@/components/ui/ProjectCard";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import type { Language } from "../../lib/i18n";
+import type { Language } from "@/lib/i18n";
+import { getProjects, type ProjectItem } from "@/lib/projects";
 
 type TabKey = "all" | "fe" | "be" | "ai";
-
-const PROJECTS_EN: ProjectItem[] = [
-  {
-    title: "SoulSpace FE Expert",
-    description:
-      "Mobile app interface for expert users in SoulSpace, focused on performance and user-friendly interaction.",
-    role: "Frontend Mobile Developer",
-    tags: ["React Native", "TypeScript", "Expo", "Mobile UI"],
-    highlight: "Built smooth mobile flows for expert operations",
-    githubUrl:
-      "https://github.com/Chuyen-d-Mobile-va-Pervasive-Computing/SoulSpace-FE-Expert",
-    categories: ["FE"],
-  },
-  {
-    title: "SoulSpace FE Admin",
-    description:
-      "Admin web dashboard for managing platform resources, users, and operational workflows.",
-    role: "Frontend Web Developer",
-    tags: ["React", "TypeScript", "Dashboard", "Admin Panel"],
-    highlight: "Implemented clear admin experiences for complex data",
-    githubUrl:
-      "https://github.com/Chuyen-d-Mobile-va-Pervasive-Computing/SoulSpace-FE-Admin",
-    categories: ["FE"],
-  },
-  {
-    title: "SoulSpace Backend",
-    description:
-      "Core backend services powering authentication, business logic, and data APIs for the SoulSpace ecosystem.",
-    role: "Backend Developer",
-    tags: ["Node.js", "API", "Database", "Architecture"],
-    highlight: "Delivered stable APIs for cross-platform clients",
-    githubUrl:
-      "https://github.com/Chuyen-d-Mobile-va-Pervasive-Computing/SoulSpace-Backend",
-    categories: ["BE"],
-  },
-  {
-    title: "SE400 Seminar CNPM",
-    description:
-      "AI-oriented seminar project exploring practical machine learning applications and solution delivery.",
-    role: "AI Engineer",
-    tags: ["Python", "Machine Learning", "Data", "Research"],
-    highlight: "Applied AI concepts to build practical outcomes",
-    githubUrl: "https://github.com/FakerHecker/SE400_Seminar_CNPM",
-    categories: ["AI"],
-  },
-  {
-    title: "Student Management System BE",
-    description:
-      "Backend system for student lifecycle management including enrollment, academic records, and service endpoints.",
-    role: "Backend Developer",
-    tags: ["Backend", "REST API", "Database", "System Design"],
-    highlight: "Engineered scalable backend modules for education use cases",
-    githubUrl:
-      "https://github.com/Se401-Student-Management-System/Student-Management-System-BE",
-    categories: ["BE"],
-  },
-];
-
-const PROJECTS_VI: ProjectItem[] = [
-  {
-    title: "SoulSpace FE Expert",
-    description:
-      "Giao diện ứng dụng di động cho nhóm chuyên gia của SoulSpace, tập trung vào hiệu năng và trải nghiệm dễ dùng.",
-    role: "Lập trình viên Frontend Mobile",
-    tags: ["React Native", "TypeScript", "Expo", "Mobile UI"],
-    highlight: "Xây dựng luồng thao tác mượt mà cho chuyên gia",
-    githubUrl:
-      "https://github.com/Chuyen-d-Mobile-va-Pervasive-Computing/SoulSpace-FE-Expert",
-    categories: ["FE"],
-  },
-  {
-    title: "SoulSpace FE Admin",
-    description:
-      "Dashboard web quản trị để quản lý tài nguyên nền tảng, người dùng và quy trình vận hành.",
-    role: "Lập trình viên Frontend Web",
-    tags: ["React", "TypeScript", "Dashboard", "Admin Panel"],
-    highlight: "Thiết kế trải nghiệm admin rõ ràng cho dữ liệu phức tạp",
-    githubUrl:
-      "https://github.com/Chuyen-d-Mobile-va-Pervasive-Computing/SoulSpace-FE-Admin",
-    categories: ["FE"],
-  },
-  {
-    title: "SoulSpace Backend",
-    description:
-      "Dịch vụ backend cốt lõi cho xác thực, nghiệp vụ và API dữ liệu trong hệ sinh thái SoulSpace.",
-    role: "Lập trình viên Backend",
-    tags: ["Node.js", "API", "Database", "Architecture"],
-    highlight: "Cung cấp API ổn định cho nhiều nền tảng client",
-    githubUrl:
-      "https://github.com/Chuyen-d-Mobile-va-Pervasive-Computing/SoulSpace-Backend",
-    categories: ["BE"],
-  },
-  {
-    title: "SE400 Seminar CNPM",
-    description:
-      "Dự án seminar định hướng AI, khám phá ứng dụng machine learning trong thực tế.",
-    role: "Kỹ sư AI",
-    tags: ["Python", "Machine Learning", "Data", "Research"],
-    highlight: "Áp dụng AI để tạo ra kết quả thực tiễn",
-    githubUrl: "https://github.com/FakerHecker/SE400_Seminar_CNPM",
-    categories: ["AI"],
-  },
-  {
-    title: "Student Management System BE",
-    description:
-      "Hệ thống backend quản lý vòng đời sinh viên, bao gồm tuyển sinh, hồ sơ học vụ và API dịch vụ.",
-    role: "Lập trình viên Backend",
-    tags: ["Backend", "REST API", "Database", "System Design"],
-    highlight:
-      "Xây dựng module backend có khả năng mở rộng cho bài toán giáo dục",
-    githubUrl:
-      "https://github.com/Se401-Student-Management-System/Student-Management-System-BE",
-    categories: ["BE"],
-  },
-];
 
 const TAB_CONFIG: Array<{ key: TabKey; label: string }> = [
   { key: "all", label: "All" },
@@ -153,7 +39,7 @@ interface ProjectsProps {
 
 export default function Projects({ lang }: ProjectsProps) {
   const isVi = lang === "vi";
-  const projects = isVi ? PROJECTS_VI : PROJECTS_EN;
+  const projects = getProjects(lang);
 
   const [activeTab, setActiveTab] = useState<TabKey>("all");
   const [expandedTabs, setExpandedTabs] = useState<Record<TabKey, boolean>>({
