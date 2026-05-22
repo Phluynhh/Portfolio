@@ -2,7 +2,7 @@
 
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Separator } from "@/components/ui/separator";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, MessageCircle } from "lucide-react";
 import type { Language } from "../../lib/i18n";
 
 interface ContactProps {
@@ -25,6 +25,8 @@ const INITIAL_FORM_VALUES: ContactFormValues = {
 
 export default function Contact({ lang }: ContactProps) {
   const isVi = lang === "vi";
+  const whatsappUrl = "https://wa.me/84941410532";
+  const telegramUrl = "https://t.me/Phluynhh";
   const [formValues, setFormValues] =
     useState<ContactFormValues>(INITIAL_FORM_VALUES);
   const [isSending, setIsSending] = useState(false);
@@ -132,6 +134,18 @@ export default function Contact({ lang }: ContactProps) {
                 value: "0941 410 532",
                 href: "tel:0941410532",
                 icon: <Phone />,
+              },
+              {
+                title: "WhatsApp",
+                value: "0941 410 532",
+                href: whatsappUrl,
+                icon: <MessageCircle />,
+              },
+              {
+                title: "Telegram",
+                value: "@Phluynhh",
+                href: telegramUrl,
+                icon: <Send />,
               },
               {
                 title: isVi ? "Địa điểm" : "Location",
