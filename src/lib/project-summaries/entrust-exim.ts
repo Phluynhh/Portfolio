@@ -8,6 +8,8 @@ export const entrustEximEn: ProjectItem = {
   role: "Frontend Developer",
   tags: ["Next.js", "React", "Tailwind CSS", "shadcn/ui", "React Query"],
   highlight: "Implemented cargo operations screens across an 8-sprint Scrum project",
+  githubUrl:
+    "https://github.com/ASE-UIT/05.-Import-and-Export-Goods-Entrusted-System-FrontEnd",
   detailHref: "/projects/entrust-exim",
   categories: ["FE"],
 };
@@ -20,6 +22,8 @@ export const entrustEximVi: ProjectItem = {
   role: "Lập trình viên Frontend",
   tags: ["Next.js", "React", "Tailwind CSS", "shadcn/ui", "React Query"],
   highlight: "Xây dựng các màn hình nghiệp vụ logistics trong dự án Scrum 8 sprint",
+  githubUrl:
+    "https://github.com/ASE-UIT/05.-Import-and-Export-Goods-Entrusted-System-FrontEnd",
   detailHref: "/projects/entrust-exim",
   categories: ["FE"],
 };

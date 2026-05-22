@@ -16,7 +16,7 @@ export default function ProjectCard({ project, lang }: ProjectCardProps) {
   const categoryLabel = project.categories.join("/");
 
   return (
-    <article className="overflow-hidden rounded-2xl border border-primary/20 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-primary/20 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
       <div className="relative flex h-56 items-center justify-center overflow-hidden bg-linear-to-br from-blue-100 via-slate-100 to-blue-200/70 p-6">
         <Badge
           variant="secondary"
@@ -50,7 +50,7 @@ export default function ProjectCard({ project, lang }: ProjectCardProps) {
         )}
       </div>
 
-      <div className="space-y-5 p-6">
+      <div className="flex flex-1 flex-col space-y-5 p-6">
         <div className="space-y-3">
           <h3 className="text-xl leading-tight font-bold text-foreground">
             {project.title}
@@ -77,12 +77,12 @@ export default function ProjectCard({ project, lang }: ProjectCardProps) {
           ))}
         </div>
 
-        <div className="flex items-center gap-2 text-base font-semibold text-primary">
-          <Sparkles size={20} />
+        <div className="flex items-start gap-2 text-sm leading-relaxed font-semibold text-primary">
+          <Sparkles className="mt-0.5 shrink-0" size={16} />
           <span>{project.highlight}</span>
         </div>
 
-        <div className="border-border/70 border-t pt-5">
+        <div className="border-border/70 mt-auto border-t pt-5">
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {project.detailHref ? (
               <Button asChild className="h-12 w-full text-base font-semibold">

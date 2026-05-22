@@ -8,45 +8,40 @@ type SkillCardProps = {
   accent: string;
 };
 
-const iconBaseUrl = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons";
-const simpleIconBaseUrl =
-  "https://cdn.jsdelivr.net/npm/simple-icons@latest/icons";
-
 const skillLogos: Record<string, string> = {
-  HTML5: `${iconBaseUrl}/html5/html5-original.svg`,
-  CSS3: `${iconBaseUrl}/css3/css3-original.svg`,
-  JavaScript: `${iconBaseUrl}/javascript/javascript-original.svg`,
-  TypeScript: `${iconBaseUrl}/typescript/typescript-original.svg`,
-  React: `${iconBaseUrl}/react/react-original.svg`,
-  "Next.js": `${iconBaseUrl}/nextjs/nextjs-original.svg`,
-  "Tailwind CSS": `${iconBaseUrl}/tailwindcss/tailwindcss-original.svg`,
-  "React Native": `${iconBaseUrl}/react/react-original.svg`,
-  Python: `${iconBaseUrl}/python/python-original.svg`,
-  "Node.js": `${iconBaseUrl}/nodejs/nodejs-original.svg`,
-  "Express.js": `${iconBaseUrl}/express/express-original.svg`,
-  "REST API": `${simpleIconBaseUrl}/swagger.svg`,
-  Authentication: `${simpleIconBaseUrl}/auth0.svg`,
-  WebSockets: `${simpleIconBaseUrl}/socketdotio.svg`,
-  Java: `${iconBaseUrl}/java/java-original.svg`,
-  PHP: `${iconBaseUrl}/php/php-original.svg`,
-  PostgreSQL: `${iconBaseUrl}/postgresql/postgresql-original.svg`,
-  MySQL: `${iconBaseUrl}/mysql/mysql-original.svg`,
-  MongoDB: `${iconBaseUrl}/mongodb/mongodb-original.svg`,
-  SQLServer: `${iconBaseUrl}/microsoftsqlserver/microsoftsqlserver-original.svg`,
-  Redis: `${iconBaseUrl}/redis/redis-original.svg`,
-  Prisma: `${iconBaseUrl}/prisma/prisma-original.svg`,
-  Docker: `${iconBaseUrl}/docker/docker-original.svg`,
-  Postman: `${iconBaseUrl}/postman/postman-original.svg`,
-  Figma: `${iconBaseUrl}/figma/figma-original.svg`,
-  "VS Code": `${iconBaseUrl}/vscode/vscode-original.svg`,
-  "Git & GitHub": `${iconBaseUrl}/git/git-original.svg`,
-  Agile: `${iconBaseUrl}/jira/jira-original.svg`,
-  PyTorch: `${iconBaseUrl}/pytorch/pytorch-original.svg`,
-  TensorFlow: `${iconBaseUrl}/tensorflow/tensorflow-original.svg`,
-  NumPy: `${iconBaseUrl}/numpy/numpy-original.svg`,
-  Pandas: `${iconBaseUrl}/pandas/pandas-original.svg`,
-  OpenCV: `${iconBaseUrl}/opencv/opencv-original.svg`,
-  "Scikit-learn": `${iconBaseUrl}/scikitlearn/scikitlearn-original.svg`,
+  HTML5: "/skills/html.png",
+  CSS3: "/skills/css.svg",
+  JavaScript: "/skills/javascript.svg",
+  TypeScript: "/skills/typescript.svg",
+  React: "/skills/react.svg",
+  "Next.js": "/skills/next.js.svg",
+  "Tailwind CSS": "/skills/tailwind-css.svg",
+  "React Native": "/skills/react-native.svg",
+  Python: "/skills/python.svg",
+  "Node.js": "/skills/nodejs.svg",
+  "REST API": "/skills/rest-api.svg",
+  Authentication: "/skills/2fa.svg",
+  WebSockets: "/skills/socket.svg",
+  Java: "/skills/java-logo.svg",
+  PHP: "/skills/php.svg",
+  PostgreSQL: "/skills/postgresql-icon.svg",
+  MySQL: "/skills/mysql-icon.svg",
+  MongoDB: "/skills/mongodb-icon.svg",
+  SQLServer: "/skills/sql-server.svg",
+  Redis: "/skills/redis-icon.svg",
+  Prisma: "/skills/prisma-svgrepo-com.svg",
+  Docker: "/skills/docker-icon.svg",
+  Postman: "/skills/postman-icon.svg",
+  Figma: "/skills/figma-icon.svg",
+  "VS Code": "/skills/visual-studio-code-icon.svg",
+  "Git & GitHub": "/skills/git-icon.svg",
+  Agile: "/skills/atlassian-jira-icon.svg",
+  PyTorch: "/skills/pytorch-icon.svg",
+  TensorFlow: "/skills/tensorflow-enterprise-svgrepo-com.svg",
+  NumPy: "/skills/numpy-svgrepo-com.svg",
+  Pandas: "/skills/pandas-svgrepo-com.svg",
+  OpenAI: "/skills/chatgpt-icon.svg",
+  "Hugging Face": "/skills/huggingface-icon.svg",
 };
 
 const skillInitials: Record<string, string> = {
@@ -103,7 +98,6 @@ export default function SkillCard({
                     width={36}
                     height={36}
                     className="h-9 w-9 object-contain"
-                    unoptimized
                   />
                 ) : (
                   <span className="skill-initials">
