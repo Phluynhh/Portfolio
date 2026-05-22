@@ -1,5 +1,9 @@
 import type { Language } from "@/lib/i18n";
 import {
+  entrustEximEn,
+  entrustEximVi,
+} from "@/lib/project-summaries/entrust-exim";
+import {
   se400SeminarCnpmEn,
   se400SeminarCnpmVi,
 } from "@/lib/project-summaries/se400-seminar-cnpm";
@@ -27,6 +31,7 @@ import type {
 export type { ProjectCategory, ProjectItem };
 
 const PROJECTS_EN: ProjectItem[] = [
+  entrustEximEn,
   soulSpaceFeExpertEn,
   soulSpaceFeAdminEn,
   soulSpaceBackendEn,
@@ -35,6 +40,7 @@ const PROJECTS_EN: ProjectItem[] = [
 ];
 
 const PROJECTS_VI: ProjectItem[] = [
+  entrustEximVi,
   soulSpaceFeExpertVi,
   soulSpaceFeAdminVi,
   soulSpaceBackendVi,
@@ -43,6 +49,7 @@ const PROJECTS_VI: ProjectItem[] = [
 ];
 
 const PROJECT_THUMBNAILS: Record<string, string> = {
+  "entrust-exim": "/thumbnail_entrust.png",
   "soulspace-fe-expert": "/thumbnail_expert.jpg",
   "soulspace-fe-admin": "/thumbnail_admin.jpg",
   "soulspace-backend": "/thumbnail_patient.jpg",

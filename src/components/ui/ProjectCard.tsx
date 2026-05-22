@@ -124,25 +124,36 @@ export default function ProjectCard({ project, lang }: ProjectCardProps) {
               </Button>
             )}
 
-            <Button
-              asChild
-              variant="secondary"
-              className="h-12 w-full text-base font-semibold"
-            >
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={
-                  isVi
-                    ? `Xem mã nguồn của ${project.title}`
-                    : `View source code of ${project.title}`
-                }
+            {project.githubUrl ? (
+              <Button
+                asChild
+                variant="secondary"
+                className="h-12 w-full text-base font-semibold"
+              >
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={
+                    isVi
+                      ? `Xem mã nguồn của ${project.title}`
+                      : `View source code of ${project.title}`
+                  }
+                >
+                  <Github size={18} />
+                  {isVi ? "Xem mã nguồn" : "View Code"}
+                </a>
+              </Button>
+            ) : (
+              <Button
+                disabled
+                variant="secondary"
+                className="h-12 w-full text-base font-semibold"
               >
                 <Github size={18} />
                 {isVi ? "Xem mã nguồn" : "View Code"}
-              </a>
-            </Button>
+              </Button>
+            )}
           </div>
         </div>
       </div>

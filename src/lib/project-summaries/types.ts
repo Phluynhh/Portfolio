@@ -8,7 +8,7 @@ export interface ProjectItem {
   tags: string[];
   highlight: string;
   thumbnailSrc?: string;
-  githubUrl: string;
+  githubUrl?: string;
   liveUrl?: string;
   detailHref?: string;
   categories: ProjectCategory[];
