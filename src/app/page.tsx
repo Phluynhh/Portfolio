@@ -44,7 +44,7 @@ export default function Home() {
       <div id="experience" className="mt-4 scroll-mt-24">
         <Experience lang={lang} />
       </div>
-      <div id="services" className="mt-4 scroll-mt-24">
+      <div id="why-hire-me" className="mt-4 scroll-mt-24">
         <Services lang={lang} />
       </div>
       <div id="contact" className="mt-4 scroll-mt-24">

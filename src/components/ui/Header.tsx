@@ -17,7 +17,7 @@ const NAV_LINKS: Record<Language, Array<{ label: string; href: string }>> = {
     { label: "Skills", href: "#skills" },
     { label: "Projects", href: "#projects" },
     { label: "Experience", href: "#experience" },
-    { label: "Services", href: "#services" },
+    { label: "Testimonials", href: "#testimonials" },
     { label: "Contact", href: "#contact" },
   ],
   vi: [
@@ -25,7 +25,7 @@ const NAV_LINKS: Record<Language, Array<{ label: string; href: string }>> = {
     { label: "Kỹ năng", href: "#skills" },
     { label: "Dự án", href: "#projects" },
     { label: "Kinh nghiệm", href: "#experience" },
-    { label: "Dịch vụ", href: "#services" },
+    { label: "Đánh giá", href: "#testimonials" },
     { label: "Liên hệ", href: "#contact" },
   ],
 };
