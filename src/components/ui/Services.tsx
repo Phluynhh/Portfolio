@@ -11,26 +11,32 @@ const WHY_HIRE_ME_EN = [
   {
     title: "Versatile Across Stacks",
     desc: "Comfortable with Frontend, Backend, Fullstack, and AI. I adapt to the shape of the product.",
+    accent: "oklch(0.6 0.17 260)",
   },
   {
     title: "Product-Minded Engineer",
     desc: "I think beyond code and keep solutions aligned with user needs and business goals.",
+    accent: "oklch(0.56 0.12 185)",
   },
   {
     title: "Independent & Reliable",
     desc: "Able to own tasks end-to-end while keeping communication clear and predictable.",
+    accent: "oklch(0.58 0.13 145)",
   },
   {
     title: "Strong Communication",
     desc: "Clear explanations, proactive updates, and collaborative problem-solving.",
+    accent: "oklch(0.61 0.16 335)",
   },
   {
     title: "Fast Learner",
     desc: "Quickly pick up new tools, domains, and patterns when a project needs them.",
+    accent: "oklch(0.63 0.15 70)",
   },
   {
     title: "Shipped Products",
     desc: "Hands-on experience turning ideas into real, working software.",
+    accent: "oklch(0.61 0.15 25)",
   },
 ];
 
@@ -38,26 +44,32 @@ const WHY_HIRE_ME_VI = [
   {
     title: "Linh hoạt nhiều mảng",
     desc: "Thoải mái với Frontend, Backend, Fullstack và AI. Mình thích nghi theo hình dáng của sản phẩm.",
+    accent: "oklch(0.6 0.17 260)",
   },
   {
     title: "Tư duy sản phẩm",
     desc: "Mình không chỉ viết code, mà luôn gắn giải pháp với nhu cầu người dùng và mục tiêu kinh doanh.",
+    accent: "oklch(0.56 0.12 185)",
   },
   {
     title: "Độc lập và đáng tin cậy",
     desc: "Có thể xử lý công việc end-to-end và giữ việc trao đổi rõ ràng, dễ theo dõi.",
+    accent: "oklch(0.58 0.13 145)",
   },
   {
     title: "Giao tiếp rõ ràng",
     desc: "Giải thích mạch lạc, cập nhật chủ động và phối hợp tốt khi giải quyết vấn đề.",
+    accent: "oklch(0.61 0.16 335)",
   },
   {
     title: "Học nhanh",
     desc: "Nắm bắt nhanh công cụ, domain và pattern mới khi dự án cần.",
+    accent: "oklch(0.63 0.15 70)",
   },
   {
     title: "Đã triển khai sản phẩm thực tế",
     desc: "Có kinh nghiệm biến ý tưởng thành phần mềm thật, có thể sử dụng được.",
+    accent: "oklch(0.61 0.15 25)",
   },
 ];
 
@@ -194,14 +206,17 @@ export default function Services({ lang }: ServicesProps) {
           {whyHireMe.map((item) => (
             <article
               key={item.title}
-              className="flex gap-4 rounded-lg border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-md"
+              className="flex gap-4 rounded-lg border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+              style={{
+                "--why-accent": item.accent,
+              } as React.CSSProperties}
             >
               <div className="mt-1 flex h-10 w-10 shrink-0 items-start justify-center">
-                <CircleCheckBig className="text-primary" />
+                <CircleCheckBig className="text-[var(--why-accent)]" />
               </div>
 
               <div>
-                <h3 className="text-lg font-bold text-foreground">
+                <h3 className="text-lg font-bold text-[var(--why-accent)]">
                   {item.title}
                 </h3>
                 <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
