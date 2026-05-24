@@ -354,6 +354,16 @@
   }
 }
 
+@keyframes testimonial-marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 @layer utilities {
   .orb-breathe {
     animation: orb-breathe 3.8s ease-in-out infinite;
@@ -395,5 +405,16 @@
 
   .icon-bounce-delay-2 {
     animation-delay: 0.24s;
+  }
+
+  .testimonial-marquee-track {
+    animation: testimonial-marquee 34s linear infinite;
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonial-marquee-track {
+    animation: none;
   }
 }

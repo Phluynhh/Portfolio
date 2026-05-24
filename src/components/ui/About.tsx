@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useRef, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { Target, Zap, Heart } from "lucide-react";
 import type { Language } from "../../lib/i18n";
@@ -9,6 +11,54 @@ interface AboutProps {
 
 export default function About({ lang }: AboutProps) {
   const isVi = lang === "vi";
+  const skillsRef = useRef<HTMLDivElement>(null);
+  const [skillsVisible, setSkillsVisible] = useState(false);
+  const softSkills = [
+    {
+      label: isVi ? "Giao tiếp tiếng Anh" : "English Communication",
+      value: 75,
+      color: "bg-blue-500",
+    },
+    {
+      label: isVi ? "Giải quyết vấn đề" : "Problem Solving",
+      value: 80,
+      color: "bg-emerald-500",
+    },
+    {
+      label: isVi ? "Hợp tác nhóm" : "Team Collaboration",
+      value: 80,
+      color: "bg-violet-500",
+    },
+    {
+      label: isVi ? "Tự học" : "Self-learning",
+      value: 85,
+      color: "bg-amber-500",
+    },
+    {
+      label: isVi ? "Khả năng thích nghi" : "Adaptability",
+      value: 80,
+      color: "bg-rose-500",
+    },
+  ];
+
+  useEffect(() => {
+    const skillsElement = skillsRef.current;
+    if (!skillsElement) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setSkillsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.35 },
+    );
+
+    observer.observe(skillsElement);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section className="relative overflow-hidden">
@@ -20,25 +70,133 @@ export default function About({ lang }: AboutProps) {
         <div className="mx-auto flex w-full flex-col justify-between gap-12 py-8 lg:flex-row">
           <div className="w-full lg:w-2/3">
             <p>
-              {isVi
-                ? "Mình là một lập trình viên đa năng, đam mê xây dựng các sản phẩm số đẹp mắt và có khả năng mở rộng. Với kinh nghiệm ở frontend, backend, fullstack và AI, mình luôn mang góc nhìn toàn diện cho mỗi dự án."
-                : "I'm a versatile software developer with a passion for building beautiful, scalable digital products. With expertise spanning frontend, backend, fullstack, and AI engineering, I bring a unique perspective to every project."}
+              {isVi ? (
+                <>
+                  Mình là một{" "}
+                  <strong className="font-bold text-foreground">
+                    software developer
+                  </strong>{" "}
+                  quan tâm đến việc xây dựng các{" "}
+                  <strong className="font-bold text-foreground">
+                    sản phẩm số thực tế
+                  </strong>{" "}
+                  và{" "}
+                  <strong className="font-bold text-foreground">
+                    có khả năng mở rộng
+                  </strong>
+                  . Mình có kinh nghiệm làm việc ở{" "}
+                  <strong className="font-bold text-foreground">frontend</strong>,{" "}
+                  <strong className="font-bold text-foreground">backend</strong>,{" "}
+                  <strong className="font-bold text-foreground">
+                    fullstack development
+                  </strong>{" "}
+                  và{" "}
+                  <strong className="font-bold text-foreground">
+                    tích hợp AI
+                  </strong>{" "}
+                  thông qua các đồ án học thuật, dự án cá nhân và công việc thực
+                  tế.
+                </>
+              ) : (
+                <>
+                  I&apos;m a{" "}
+                  <strong className="font-bold text-foreground">
+                    software developer
+                  </strong>{" "}
+                  interested in building{" "}
+                  <strong className="font-bold text-foreground">practical</strong>{" "}
+                  and{" "}
+                  <strong className="font-bold text-foreground">
+                    scalable digital products
+                  </strong>
+                  . I have experience working across{" "}
+                  <strong className="font-bold text-foreground">frontend</strong>,{" "}
+                  <strong className="font-bold text-foreground">backend</strong>,{" "}
+                  <strong className="font-bold text-foreground">
+                    fullstack development
+                  </strong>
+                  , and{" "}
+                  <strong className="font-bold text-foreground">
+                    AI integration
+                  </strong>{" "}
+                  through academic projects, personal projects, and real-world
+                  work.
+                </>
+              )}
             </p>
             <p className="mt-4">
-              {isVi
-                ? "Hành trình công nghệ của mình bắt đầu từ sự tò mò về cách mọi thứ vận hành. Mình đã dành nhiều năm để làm chủ công nghệ web hiện đại, thiết kế hệ thống backend vững chắc và khám phá giao điểm giữa AI với phát triển sản phẩm."
-                : "My journey in tech started with a fascination for how things work. I've spent years mastering modern web technologies, designing robust backend systems, and exploring the intersection of AI and product development."}
+              {isVi ? (
+                <>
+                  Mình thích{" "}
+                  <strong className="font-bold text-foreground">
+                    giải quyết vấn đề
+                  </strong>
+                  ,{" "}
+                  <strong className="font-bold text-foreground">
+                    viết code rõ ràng
+                  </strong>{" "}
+                  và liên tục cải thiện{" "}
+                  <strong className="font-bold text-foreground">
+                    kỹ năng kỹ thuật
+                  </strong>
+                  . Mình có thể làm việc độc lập hoặc phối hợp với đội nhóm để
+                  tạo ra các{" "}
+                  <strong className="font-bold text-foreground">
+                    giải pháp phần mềm ổn định
+                  </strong>{" "}
+                  và đáng tin cậy.
+                </>
+              ) : (
+                <>
+                  I enjoy{" "}
+                  <strong className="font-bold text-foreground">
+                    solving problems
+                  </strong>
+                  ,{" "}
+                  <strong className="font-bold text-foreground">
+                    writing clean code
+                  </strong>
+                  , and continuously improving my{" "}
+                  <strong className="font-bold text-foreground">
+                    technical skills
+                  </strong>
+                  . I can work independently or collaborate with a team to
+                  deliver{" "}
+                  <strong className="font-bold text-foreground">
+                    reliable software solutions
+                  </strong>
+                  .
+                </>
+              )}
             </p>
-            <p className="mt-4">
-              {isVi
-                ? "Điều thúc đẩy mình là cơ hội giải quyết vấn đề thực tế bằng code tinh gọn. Mình tin vào những giải pháp sạch, dễ bảo trì, không chỉ chạy được mà còn mang lại trải nghiệm tốt cho người dùng."
-                : "What drives me is the opportunity to solve real problems with elegant code. I believe in writing clean, maintainable solutions that don't just work, they delight users and impress technical leaders."}
-            </p>
-            <p className="mt-4">
-              {isVi
-                ? "Mình có thể làm việc độc lập hoặc theo nhóm hiệu quả, đặc biệt phù hợp với môi trường tốc độ cao, nơi cần linh hoạt nhiều vai trò và liên tục học hỏi."
-                : "I'm equally comfortable working independently or in teams, and I thrive in fast-paced environments where I can wear multiple hats and learn continuously."}
-            </p>
+
+            <div ref={skillsRef} className="mt-8 grid gap-5">
+              {softSkills.map((skill) => (
+                <div key={skill.label}>
+                  <div className="mb-2 flex items-center justify-between gap-4 text-sm">
+                    <span className="font-semibold text-foreground">
+                      {skill.label}
+                    </span>
+                    <span className="font-bold text-foreground">
+                      {skill.value}%
+                    </span>
+                  </div>
+                  <div
+                    className="h-2.5 overflow-hidden rounded-full bg-secondary"
+                    role="progressbar"
+                    aria-label={skill.label}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-valuenow={skill.value}
+                  >
+                    <div
+                      className={`h-full rounded-full transition-[width] duration-1000 ease-out ${skill.color}`}
+                      style={{ width: skillsVisible ? `${skill.value}%` : 0 }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="w-full lg:w-1/3">
             <div className="border border-primary/20 rounded-2xl p-8 bg-sidebar">
@@ -52,9 +210,9 @@ export default function About({ lang }: AboutProps) {
               </p>
             </div>
 
-            <div className="mt-4 flex items-center gap-4 rounded-2xl bg-sidebar p-4 transition-transform duration-200 ease-out hover:scale-[1.02]">
-              <div className="rounded-lg bg-primary/20 p-2">
-                <Target color="#246bf6" />
+            <div className="mt-4 flex items-center gap-4 rounded-2xl bg-sky-50 p-4 transition-transform duration-200 ease-out hover:scale-[1.02] dark:bg-sky-400/10">
+              <div className="rounded-lg bg-sky-100 p-2 text-sky-500 dark:bg-sky-400/15 dark:text-sky-300">
+                <Target />
               </div>
               <div>
                 <p className="text-sm font-semibold">
@@ -68,9 +226,9 @@ export default function About({ lang }: AboutProps) {
               </div>
             </div>
 
-            <div className="mt-4 flex items-center gap-4 rounded-2xl bg-sidebar p-4 transition-transform duration-200 ease-out hover:scale-[1.02]">
-              <div className="rounded-lg bg-primary/20 p-2">
-                <Zap color="#246bf6" />
+            <div className="mt-4 flex items-center gap-4 rounded-2xl bg-amber-50 p-4 transition-transform duration-200 ease-out hover:scale-[1.02] dark:bg-amber-400/10">
+              <div className="rounded-lg bg-amber-100 p-2 text-amber-500 dark:bg-amber-400/15 dark:text-amber-300">
+                <Zap />
               </div>
               <div>
                 <p className="text-sm font-semibold">
@@ -84,9 +242,9 @@ export default function About({ lang }: AboutProps) {
               </div>
             </div>
 
-            <div className="mt-4 flex items-center gap-4 rounded-2xl bg-sidebar p-4 transition-transform duration-200 ease-out hover:scale-[1.02]">
-              <div className="rounded-lg bg-primary/20 p-2">
-                <Heart color="#246bf6" />
+            <div className="mt-4 flex items-center gap-4 rounded-2xl bg-rose-50 p-4 transition-transform duration-200 ease-out hover:scale-[1.02] dark:bg-rose-400/10">
+              <div className="rounded-lg bg-rose-100 p-2 text-rose-500 dark:bg-rose-400/15 dark:text-rose-300">
+                <Heart />
               </div>
               <div>
                 <p className="text-sm font-semibold">

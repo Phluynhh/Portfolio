@@ -8,7 +8,6 @@ import {
   Code,
   Database,
   GraduationCap,
-  Layers,
   Rocket,
   Server,
   Sparkles,
@@ -48,21 +47,13 @@ const databaseSkills = [
   "Prisma",
 ];
 
-const fullstackSkills = [
-  "Next.js",
-  "Node.js",
-  "Prisma",
-  "PostgreSQL",
-  "Docker",
-];
-
 const aiLlmSkills = [
   "PyTorch",
   "TensorFlow",
   "NumPy",
   "Pandas",
-  "OpenCV",
-  "Scikit-learn",
+  "OpenAI",
+  "Hugging Face",
 ];
 
 const toolSkills = [
@@ -135,12 +126,6 @@ export default function Skills({ lang }: SkillsProps) {
             icon={<Database />}
             skills={databaseSkills}
             accent="var(--chart-3)"
-          />
-          <SkillCard
-            title="Fullstack"
-            icon={<Layers />}
-            skills={fullstackSkills}
-            accent="var(--chart-4)"
           />
           <SkillCard
             title="AI & LLM"

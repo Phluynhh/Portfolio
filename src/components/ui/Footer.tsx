@@ -1,5 +1,12 @@
 import React from "react";
-import { Facebook, Github, Linkedin, Mail } from "lucide-react";
+import {
+  Facebook,
+  Github,
+  Linkedin,
+  Mail,
+  MessageCircle,
+  Send,
+} from "lucide-react";
 import type { Language } from "../../lib/i18n";
 
 interface FooterProps {
@@ -8,6 +15,8 @@ interface FooterProps {
 
 export default function Footer({ lang }: FooterProps) {
   const isVi = lang === "vi";
+  const whatsappUrl = "https://wa.me/84941410532";
+  const telegramUrl = "https://t.me/Phluynhh";
 
   return (
     <footer className="w-full px-4 py-12 md:px-12 lg:px-20">
@@ -91,6 +100,16 @@ export default function Footer({ lang }: FooterProps) {
             >
               <span>
                 <Mail />
+              </span>
+            </a>
+            <a href={whatsappUrl} target="_blank" rel="noreferrer">
+              <span>
+                <MessageCircle />
+              </span>
+            </a>
+            <a href={telegramUrl} target="_blank" rel="noreferrer">
+              <span>
+                <Send />
               </span>
             </a>
           </div>

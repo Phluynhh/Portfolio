@@ -1,8 +1,13 @@
 "use client";
 
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import {
+  useState,
+  type CSSProperties,
+  type ChangeEvent,
+  type FormEvent,
+} from "react";
 import { Separator } from "@/components/ui/separator";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, MessageCircle } from "lucide-react";
 import type { Language } from "../../lib/i18n";
 
 interface ContactProps {
@@ -25,6 +30,8 @@ const INITIAL_FORM_VALUES: ContactFormValues = {
 
 export default function Contact({ lang }: ContactProps) {
   const isVi = lang === "vi";
+  const whatsappUrl = "https://wa.me/84941410532";
+  const telegramUrl = "https://t.me/Phluynhh";
   const [formValues, setFormValues] =
     useState<ContactFormValues>(INITIAL_FORM_VALUES);
   const [isSending, setIsSending] = useState(false);
@@ -126,32 +133,57 @@ export default function Contact({ lang }: ContactProps) {
                   ? "Mình sẽ phản hồi qua email bạn điền trong form."
                   : "I'll reply to the email address you enter in the form.",
                 icon: <Mail />,
+                accent: "oklch(0.6 0.17 260)",
               },
               {
                 title: isVi ? "Điện thoại" : "Phone",
                 value: "0941 410 532",
                 href: "tel:0941410532",
                 icon: <Phone />,
+                accent: "oklch(0.56 0.12 185)",
+              },
+              {
+                title: "WhatsApp",
+                value: "0941 410 532",
+                href: whatsappUrl,
+                icon: <MessageCircle />,
+                accent: "oklch(0.58 0.13 145)",
+              },
+              {
+                title: "Telegram",
+                value: "@Phluynhh",
+                href: telegramUrl,
+                icon: <Send />,
+                accent: "oklch(0.61 0.16 335)",
               },
               {
                 title: isVi ? "Địa điểm" : "Location",
                 value: isVi ? "Việt Nam" : "Vietnam",
                 icon: <MapPin />,
+                accent: "oklch(0.61 0.15 25)",
               },
             ].map((item) => (
-              <div key={item.title} className="flex items-start gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <div
+                key={item.title}
+                className="flex items-start gap-4"
+                style={
+                  {
+                    "--contact-accent": item.accent,
+                  } as CSSProperties
+                }
+              >
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[color-mix(in_oklch,var(--contact-accent)_13%,transparent)] text-[var(--contact-accent)]">
                   {item.icon}
                 </div>
 
                 <div className="space-y-1 pt-1">
-                  <h3 className="text-base font-semibold text-foreground">
+                  <h3 className="text-base font-semibold text-[var(--contact-accent)]">
                     {item.title}
                   </h3>
                   {"href" in item ? (
                     <a
                       href={item.href}
-                      className="text-base text-primary transition-colors hover:text-primary/80"
+                      className="text-base text-[var(--contact-accent)] transition-colors hover:opacity-80"
                     >
                       {item.value}
                     </a>

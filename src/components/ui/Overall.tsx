@@ -3,7 +3,14 @@
 import { useEffect, useState } from "react";
 import Decorations from "../graphics/Decorations";
 import { Button } from "@/components/ui/button";
-import { MoveRight, Github, Linkedin, Mail } from "lucide-react";
+import {
+  MoveRight,
+  Github,
+  Linkedin,
+  Mail,
+  MessageCircle,
+  Send,
+} from "lucide-react";
 import type { Language } from "../../lib/i18n";
 
 interface OverallProps {
@@ -12,6 +19,8 @@ interface OverallProps {
 
 export default function Overall({ lang }: OverallProps) {
   const isVi = lang === "vi";
+  const whatsappUrl = "https://wa.me/84941410532";
+  const telegramUrl = "https://t.me/Phluynhh";
   const headline = isVi
     ? "Lập trình viên Fullstack xây dựng sản phẩm Web và AI hiện đại"
     : "Fullstack Developer Building Modern Web & AI Products";
@@ -103,6 +112,12 @@ export default function Overall({ lang }: OverallProps) {
               </a>
               <a href="mailto:tranlinh250415@gmail.com">
                 <Mail />
+              </a>
+              <a href={whatsappUrl} target="_blank" rel="noreferrer">
+                <MessageCircle />
+              </a>
+              <a href={telegramUrl} target="_blank" rel="noreferrer">
+                <Send />
               </a>
             </div>
           </div>
